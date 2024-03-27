@@ -1,0 +1,45 @@
+<!-- Dans votre_template.html -->
+
+<!DOCTYPE html>
+<html lang="fr">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz</title>
+    <!-- Intégration de Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .quiz-card {
+            height: 100%;
+        }
+        .quiz-image {
+            max-height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Liste des quizz</h1>
+        <div class="row">
+            {% for quiz in quizz %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card quiz-card">
+                    <img src="{{ quiz.image.url }}" class="card-img-top quiz-image" alt="{{ quiz.titre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">                <a href="{% url 'quiz_detail' quiz.id %}" class="list-group-item list-group-item-action">{{ quiz.titre }}</a></h5>
+
+                        <p class="card-text">{{ quiz.description }}</p>
+                        <p class="card-text">Difficulté: {{ quiz.difficulte }}</p>
+                        <p class="card-text">Dernière modification : {{ quiz.date_modification|date:"d F Y à H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Intégration de Bootstrap JS (optionnel, pour les fonctionnalités avancées) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

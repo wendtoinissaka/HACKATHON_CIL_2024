@@ -1,0 +1,36 @@
+<!-- templates/quiz_detail.html -->
+
+<!DOCTYPE html>
+<html lang="fr">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des questions du quiz</title>
+    <!-- Intégration de Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">{{ quiz.titre }}</h1>
+        <p>{{ quiz.description }}</p>
+        <p>Difficulté: {{ quiz.difficulte }}</p>
+        <img src="{{ quiz.image.url }}" alt="{{ quiz.titre }}" class="img-fluid">
+        <h2 class="mt-4">Liste des questions :</h2>
+        <ul>
+            {% for question in quiz.questions.all %}
+                <li>{{ question.enonce }}</li>
+                <ul>
+                    <li>{{ question.choix_1 }}</li>
+                    <li>{{ question.choix_2 }}</li>
+                    <li>{{ question.choix_3 }}</li>
+                    <li>{{ question.choix_4 }}</li>
+                    <li>Réponse correcte: Choix {{ question.reponse_correcte }}</li>
+                </ul>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- Intégration de Bootstrap JS (optionnel, pour les fonctionnalités avancées) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
