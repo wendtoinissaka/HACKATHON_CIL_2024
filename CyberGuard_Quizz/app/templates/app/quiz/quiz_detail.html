@@ -1,36 +1,59 @@
-<!-- templates/quiz_detail.html -->
+{% extends 'app/base.html' %}
 
-<!DOCTYPE html>
-<html lang="fr">
+{% block content %}
+{% load static %}
+
+
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des questions du quiz</title>
-    <!-- Intégration de Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Détails du Quiz</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
-<body>
-    <div class="container mt-5">
-        <h1 class="mb-4">{{ quiz.titre }}</h1>
-        <p>{{ quiz.description }}</p>
-        <p>Difficulté: {{ quiz.difficulte }}</p>
-        <img src="{{ quiz.image.url }}" alt="{{ quiz.titre }}" class="img-fluid">
-        <h2 class="mt-4">Liste des questions :</h2>
-        <ul>
-            {% for question in quiz.questions.all %}
-                <li>{{ question.enonce }}</li>
-                <ul>
-                    <li>{{ question.choix_1 }}</li>
-                    <li>{{ question.choix_2 }}</li>
-                    <li>{{ question.choix_3 }}</li>
-                    <li>{{ question.choix_4 }}</li>
-                    <li>Réponse correcte: Choix {{ question.reponse_correcte }}</li>
-                </ul>
-            {% endfor %}
-        </ul>
-    </div>
-    <!-- Intégration de Bootstrap JS (optionnel, pour les fonctionnalités avancées) -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+    <h1>{{ quiz.titre }}</h1>
+    <p>{{ quiz.description }}</p>
+    <h2>Questions:</h2>
+    {% for question in quiz.questions.all %}
+        <form id="form_{{ question.id }}">
+            <p>{{ question.enonce }}</p>
+            <input type="radio" name="choice" value="1">1. {{ question.choix_1 }}<br>
+            <input type="radio" name="choice" value="2">2. {{ question.choix_2 }}<br>
+            <input type="radio" name="choice" value="3">3. {{ question.choix_3 }}<br>
+            <input type="radio" name="choice" value="4">4. {{ question.choix_4 }}<br>
+            <div class="hidden" id="answer_{{ question.id }}">La réponse correcte est: {{ question.reponse_correcte }}</div>
+            <div class="hidden" id="result_{{ question.id }}"></div>
+            <button type="button" onclick="showAnswer({{ question.id }})">Soumettre</button>
+        </form>
+    {% endfor %}
+
+    <!-- JavaScript pour afficher la réponse -->
+    <script>
+        function showAnswer(questionId) {
+            var answerDiv = document.getElementById('answer_' + questionId);
+            var resultDiv = document.getElementById('result_' + questionId);
+            var choice = document.querySelector('input[name="choice"]:checked');
+            if (!choice) {
+                resultDiv.innerText = "Veuillez sélectionner une réponse.";
+                resultDiv.style.color = "red";
+            } else {
+                var selectedChoice = parseInt(choice.value);
+                var correctAnswer = parseInt(answerDiv.innerText.split(":")[1].trim());
+                if (selectedChoice === correctAnswer) {
+                    resultDiv.innerText = "Votre réponse est correcte!";
+                    resultDiv.style.color = "green";
+                } else {
+                    resultDiv.innerText = "Votre réponse est incorrecte.";
+                    resultDiv.style.color = "red";
+                    answerDiv.style.display = 'block';
+                }
+            }
+            resultDiv.style.display = 'block';
+        }
+    </script>
+
+{% endblock %}

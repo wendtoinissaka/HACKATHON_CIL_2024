@@ -1,0 +1,17 @@
+<!-- templates/quiz/corrections.html -->
+
+<div>
+    <h2>Votre score : {{ score }} / {{ total_questions }}</h2>
+    <h3>Corrections :</h3>
+    <ul>
+        {% for correction in corrections %}
+        <li>
+            <strong>{{ correction.question }}</strong>
+            <ul>
+                <li>Choix sélectionné : {{ correction.selected_choice }}</li>
+                <li>Réponse correcte : {{ correction.correct_choice }}</li>
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

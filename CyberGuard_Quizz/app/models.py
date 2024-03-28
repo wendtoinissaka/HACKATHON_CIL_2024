@@ -1,5 +1,5 @@
 from django.db import models
-
+import random
 
 class ConseilDeSecurite(models.Model):
     titre = models.CharField(max_length=200)
@@ -10,6 +10,7 @@ class ConseilDeSecurite(models.Model):
         return self.titre
 
 class Actualite(models.Model):
+    image = models.ImageField(upload_to='app/images/actualite_images', default='app/images/default_actualite_image.png', null=True, blank=True)
     titre = models.CharField(max_length=200)
     contenu = models.TextField()
     date_publication = models.DateTimeField(auto_now_add=True)
@@ -47,9 +48,49 @@ class Question(models.Model):
     choix_4 = models.CharField(max_length=200)
     reponse_correcte = models.IntegerField(choices=((1, 'Choix 1'), (2, 'Choix 2'), (3, 'Choix 3'), (4, 'Choix 4')))
 
+    def get_random_questions(self, count):
+        questions = list(self.questions.all())
+        random.shuffle(questions)
+        return questions[:count]
+
 
 def __str__(self):
         return self.texte_question
+
+
+class Titre_loi(models.Model):
+    numero_titre = models.IntegerField()
+    nom_titre = models.CharField(max_length=100)
+    date_publication = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nom_titre
+
+
+class Chapitre_loi(models.Model):
+    numero_chapitre = models.IntegerField()
+    nom_chapitre = models.CharField(max_length=100)
+    date_publication = models.DateTimeField(auto_now_add=True)
+    titre = models.ForeignKey(Titre_loi, on_delete=models.CASCADE, related_name='chapitre_loi')
+
+    def __str__(self):
+        return self.nom_chapitre
+
+
+class Loi(models.Model):
+    numero_article = models.IntegerField(unique=True)
+    titre = models.ForeignKey(Titre_loi, on_delete=models.CASCADE, related_name='loi')
+    chapitre = models.ForeignKey(Chapitre_loi, on_delete=models.CASCADE, related_name='loi')
+    description = models.TextField()
+    date_publication = models.DateTimeField(auto_now_add=True)
+
+
+class MessageUtilisateur(models.Model):
+    nom = models.CharField(max_length=100)
+    adresse_email = models.EmailField()
+    objet = models.CharField(max_length=50)
+    message = models.TextField()
+    date_publication = models.DateTimeField(auto_now_add=True)
 
 
 

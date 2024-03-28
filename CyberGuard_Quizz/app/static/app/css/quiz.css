@@ -160,3 +160,11 @@ body{
         font-size: 1rem;
     }
 }
+
+.quiz-card {
+            height: 100%;
+        }
+        .quiz-image {
+            max-height: 200px;
+            object-fit: cover;
+        }

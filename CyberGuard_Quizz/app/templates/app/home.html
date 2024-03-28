@@ -1,13 +1,178 @@
 {% extends 'app/base.html' %}
-{% load static %}
 
 {% block content %}
-<div>Accueil</div>
+{% load static %}
 
 
-{% endblock %}
+    <section id="home">
+        <div class="left">
+            <h1 class="text-dark fw-bold">Securisez <span>Vous</span> Grace a nos conseil</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit doloremque earum, totam laudantium dolor voluptatum fugiat. Odio doloribus nostrum harum corporis. Natus omnis deleniti reiciendis illum maxime necessitatibus accusantium esse.</p>
+            <a href="#">Commencer</a>
+        </div>
+        <div class="right">
+            <img src="{% static 'app/images/banniere.png' %}">
+        </div>
+    </section>
 
-{% block footer %}
-<div class="text-center m-5 bg-dark text-white"> footer</div>
 
+
+
+    <!-- section Actualite -->
+
+    <section id="Actualités">
+        <h1 class="section_title text-dark fw-bold p-2 fs-2">Actualités</h1>
+<!--        <div class="images">-->
+<!--            <ul>-->
+<!--                <li class="Actualité">-->
+<!--                   <div>-->
+<!--                       <img src="images/car1.jpg" alt="">-->
+<!--                   </div>-->
+<!--                   <span>LAMBORGHINI</span>-->
+<!--                   <a href="#">Consulter</a>-->
+<!--                </li>-->
+<!--                <li class="Actualité">-->
+<!--                    <div>-->
+<!--                        <img src="images/car2.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <span>LAMBORGHINI</span>-->
+<!--                    <a href="#">Consulter</a>-->
+<!--                 </li>-->
+<!--                 <li class="Actualité">-->
+<!--                    <div>-->
+<!--                        <img src="images/car3.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <span>LAMBORGHINI</span>-->
+<!--                    <a href="#">Consulter</a>-->
+<!--                 </li>-->
+<!--                 <li class="Actualité">-->
+<!--                    <div>-->
+<!--                        <img src="images/car4.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <span>LAMBORGHINI</span>-->
+<!--                    <a href="#">Consulter</a>-->
+<!--                 </li>-->
+<!--                 <li class="Actualité">-->
+<!--                    <div>-->
+<!--                        <img src="images/car5.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <span>LAMBORGHINI</span>-->
+<!--                    <a href="#">Consulter</a>-->
+<!--                 </li>-->
+<!--                 <li class="Actualité">-->
+<!--                    <div>-->
+<!--                        <img src="images/car6.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <span>LAMBORGHINI</span>-->
+<!--                    <a href="#">Consulter</a>-->
+<!--                 </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+        {% if actualite %}
+        <div class="container mt-5">
+    <div class="row">
+            {% for actualite in actualite %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card quiz-card">
+                    <img src="{{ actualite.image.url }}" class="card-img-top quiz-image" alt="{{ actualite.titre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">  <a href= class="list-group-item list-group-item-action">{{ actualite.titre }}</a></h5>
+
+                        <p class="card-text">{{ quiz.contenu }}</p>
+                        <p class="card-text">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else  %}
+            <p class="my-5">  les actualites seront disponible bientôt</p>
+        </div>
+    </div>
+            {% endif  %}
+
+
+    </section>
+
+    <!-- section loi -->
+
+    <section id="Lois" class="">
+        <h1 class="section_title text-dark fw-bold p-2 fs-2">Lois en vigueur</h1>
+        <div class="container mt-5">
+            <div class="row">
+        <div class="list_Lois">
+            {% for loi in lois %}
+
+            <div class="Loi">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <h3>Loi {{ loi.numero_article }}</h3>
+                <p>{{ loi.description|truncatechars:150 }}</p>
+                 <a href="{% url 'loi_detail' loi.id %}" class="read_more">Lire Plus</a>
+            </div>
+<!--            <div class="Loi">-->
+<!--                <i class="fa-solid fa-screwdriver-wrench"></i>-->
+<!--                <h3>Loi 2</h3>-->
+<!--                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis illum natus iste, dicta maiores ipsam.</p>-->
+<!--                 <a href="#" class="read_more">Lire Plus</a>-->
+<!--            </div>-->
+<!--            <div class="Loi">-->
+<!--                <i class="fa-solid fa-screwdriver-wrench"></i>-->
+<!--                <h3>Loi 3</h3>-->
+<!--                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis illum natus iste, dicta maiores ipsam.</p>-->
+<!--                 <a href="#" class="read_more">Lire Plus</a>-->
+
+<!--            </div>-->
+
+
+                {% endfor %}
+
+
+            </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- section contact -->
+
+    <section id="contact" class="mt-5">
+        <h1 class="section_title text-dark fw-bold p-2 fs-2">Nos Services</h1>
+        <div class="localisation_contact_div">
+            <div class="localisation">
+                <h3>Notre Adresse</h3>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.8720994639843!2d-1.505779425088184!3d12.324394528737528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe2ebe4845555555%3A0xa9ec98e4b4dc1b03!2sCommission%20de%20l&#39;Informatique%20et%20des%20Libert%C3%A9s!5e0!3m2!1sfr!2sbf!4v1711608737652!5m2!1sfr!2sbf" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <div class="form_contact">
+                <h3>Envoyer un message</h3>
+                <form action="#">
+                    <input type="text"placeholder="Nom">
+                    <input type="email"placeholder="Adresse Mail">
+                    <input type="text"placeholder="Objet">
+                    <textarea name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
+                    <input type="submit" value="Envoyer">
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        //menu responsive code JS
+
+        var menu_toggle = document.querySelector('.menu_toggle');
+        var menu = document.querySelector('.menu');
+        var menu_toggle_span = document.querySelector('.menu_toggle span');
+
+        menu_toggle.onclick = function(){
+            menu_toggle.classList.toggle('active');
+            menu_toggle_span.classList.toggle('active');
+            menu.classList.toggle('responsive') ;
+        }
+
+    </script>
+</body>
+</html>
 {% endblock %}

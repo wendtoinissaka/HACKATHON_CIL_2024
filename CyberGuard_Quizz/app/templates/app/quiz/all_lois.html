@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+
+{% load static %}
+    <title>Liste complète des lois</title>
+
+    <div class="container mt-5 fs-4">
+        <h1 class="text-center mb-4">Liste complète des lois</h1>
+        <div class="list-group">
+            {% for loi in lois %}
+            <a href="#" class="list-group-item list-group-item-action">
+                <h5 class="mb-1">Loi n° {{ loi.numero_article }}</h5>
+                <p class="mb-1">{{ loi.description }}</p>
+                <!-- Ajoutez d'autres détails de loi si nécessaire -->
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}
+

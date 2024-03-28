@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import ConseilDeSecurite, Actualite, Quiz, Question
+from .models import ConseilDeSecurite, Actualite, Quiz, Question, Loi, Titre_loi, Chapitre_loi
+
 
 class ConseilDeSecuriteAdmin(admin.ModelAdmin):
     list_display = ('titre', 'contenu', 'date_publication')
@@ -26,7 +27,24 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ('enonce',)
     list_filter = ('quiz',)
 
+class LoiAdmin(admin.ModelAdmin):
+    list_display = ('numero_article', 'titre', 'chapitre',)
+    search_fields = ('titre','chapitre')
+    list_filter = ('titre',)
+
+
+@admin.register(Titre_loi)
+class Titre_loiAdmin(admin.ModelAdmin):
+    list_display = ('numero_titre','nom_titre',)
+
+
+@admin.register(Chapitre_loi)
+class Chapitre_loiAdmin(admin.ModelAdmin):
+    list_display = ('numero_chapitre','nom_chapitre',)
+
+
 admin.site.register(ConseilDeSecurite, ConseilDeSecuriteAdmin)
 admin.site.register(Actualite, ActualiteAdmin)
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Loi, LoiAdmin)
