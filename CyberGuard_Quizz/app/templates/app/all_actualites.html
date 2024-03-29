@@ -1,0 +1,21 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container mt-5 fs-4">
+    <h1 class="text-center mb-4">Liste complète des actualités</h1>
+    <div class="row">
+        {% for actualite in actualites %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <img src="{{ actualite.image.url }}" class="card-img-top" alt="{{ actualite.titre }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ actualite.titre }}</h5>
+                    <p class="card-text">{{ actualite.contenu }}</p>
+                    <p class="card-text"><small class="text-muted">Publié le {{ actualite.date_publication }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

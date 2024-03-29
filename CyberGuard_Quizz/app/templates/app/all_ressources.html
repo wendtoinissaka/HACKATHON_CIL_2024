@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container mt-5 fs-4" xmlns="http://www.w3.org/1999/html">
+    <h1 class="text-center mb-4">Informez vous!  <span>  soyez sensibiliser </span> au tour de vous!</h1>
+
+
+    <section id="Lois" class="mb-5">
+
+        <h1 class="section_title">Ressources</h1>
+    </section>
+    <div class="row mt-5">
+        {% for ressource in ressources %}
+
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card quiz-card">
+
+
+                 <div class="fruite-img min-height-200">
+                <a href="{% url 'all_pdf_ressources' %}" class="text-decoration-none text-center text-primary fs-3 list-group-item-action"><img src="{{ ressource.image.url }}" class="card-img-top quiz-image" alt="{{ ressource.titre }}"></a>
+            </div>
+
+                <div class="card-body">
+                    <h2 class="card-title text-center"><a href="{% url 'all_pdf_ressources' %}" class="text-decoration-none text-center text-primary fs-1 list-group-item-action">{{ ressource.type_ressource }}</a></h2>
+                    <p class="card-text">{{ ressource.description|truncatechars:150 }}</p>
+                    <p class="card-text"><small class="text-muted">{{ ressource.type_ressource }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}

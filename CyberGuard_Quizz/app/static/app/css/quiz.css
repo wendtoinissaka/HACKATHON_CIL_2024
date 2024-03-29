@@ -163,8 +163,18 @@ body{
 
 .quiz-card {
             height: 100%;
+    transition: transform 0.3s ease-in-out;
+
         }
-        .quiz-image {
-            max-height: 200px;
-            object-fit: cover;
-        }
+.quiz-image {
+    max-height: 200px;
+    object-fit: cover;
+
+}
+
+.quiz-image:hover {
+    }
+
+.quiz-card:hover {
+    transform: scale(1.05);
+}

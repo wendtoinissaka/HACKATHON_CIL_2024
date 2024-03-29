@@ -333,7 +333,6 @@ footer {
         display: none;
     }
     #home {
-        padding:  0 10px;
         justify-content: center;
         flex-direction: column;
     }
@@ -436,3 +435,8 @@ footer {
     }
 
 }
+
+    .custom-margin {
+        margin-top: 150px; /* Ajoute une marge de 50 pixels en haut */
+        margin-bottom: 50px; /* Ajoute une marge de 50 pixels en bas */
+    }

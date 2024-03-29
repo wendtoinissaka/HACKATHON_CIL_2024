@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 fs-4" xmlns="http://www.w3.org/1999/html">
+    <h1 class="text-center mb-4">Informez vous!  <span>  soyez sensibiliser </span> au tour de vous!</h1>
+
+
+    <section id="Lois" class="mb-5">
+
+        <h1 class="section_title">Ressources PDF</h1>
+    </section>
+    <div class="row mt-5">
+        {% for ressource_pdf in ressources_pdf %}
+
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card quiz-card">
+
+
+                 <div class="fruite-img min-height-200">
+    <a href="{% static 'app/images/pngegg.png' %}" download="{{ ressource_pdf.fichier.url }}" class="text-decoration-none text-center text-primary fs-3 list-group-item-action">
+        <img src="{% static 'app/images/pngegg.png' %}" class="card-img-top quiz-image" alt="logo_pdf">
+    </a>
+</div>
+
+
+                <div class="card-body">
+                    <h2 class="card-title text-center"><a href="{% url 'all_pdf_ressources' %}" class="text-decoration-none text-center text-primary fs-1 list-group-item-action">{{ ressource_pdf.titre }}</a></h2>
+                    <p class="card-text">{{ ressource_pdf.description }}</p>
+                </div>
+            <button class="btn btn-danger rounded-pill p-3 text-dark fs-3" style="background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);"><a class="text-decoration-none text-dark" href="{{ ressource_pdf.fichier.url }}" download>Télécharger</a></button>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}

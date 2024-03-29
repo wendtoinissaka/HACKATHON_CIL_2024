@@ -2,177 +2,218 @@
 
 {% block content %}
 {% load static %}
-
-
-    <section id="home">
-        <div class="left">
-            <h1 class="text-dark fw-bold">Securisez <span>Vous</span> Grace a nos conseil</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit doloremque earum, totam laudantium dolor voluptatum fugiat. Odio doloribus nostrum harum corporis. Natus omnis deleniti reiciendis illum maxime necessitatibus accusantium esse.</p>
-            <a href="#">Commencer</a>
+<div class="container" style="height: 400px;
+    width: 100%;
+    background-image: url({% static 'app/images/banniere.png' %});
+    background-size: cover; /* Ajuste la taille de l'image pour couvrir la div */
+    background-position: center; /* Centre l'image horizontalement */
+    display: flex;
+    justify-content: center;
+    align-items: center;">
+         <div class="col-md-8 d-none d-xl-block">
+        <h1 class="text-white mt-5 mx-5" id="dynamic-text"></h1>
         </div>
-        <div class="right">
-            <img src="{% static 'app/images/banniere.png' %}">
+
+    <div class="row g-0 mt-5">
+    <form method="get" class="">
+        <div class="position-relative mx-auto ">
+            <input  placeholder="Consulter l'article N° " name="q"  class="form-control border-2 border-white w-75 py-3 px-5 rounded-pill" type="text" >
+            <button type="submit" class="btn btn-warning border-2 border-white py-3 px-4 position-absolute rounded-pill text-dark h-100" style="top: 0; background-color: #ffc107 ; right: 5%;">Rechercher</button>
         </div>
-    </section>
+    </form>
+    </div>
+</div>
 
+<!--<section id="home">-->
+<!--    <div class="left">-->
+<!--        <h1 class="text-dark fw-bold">Soyez conscient, soyez proactif : protégez vos données  <span>personnelles</span></h1>-->
+<!--        <p class="">Apprenez à gérer vos données personnelles et à les protéger efficacement.</p>-->
+<!--    </div>-->
+<!--    <div class="right">-->
+<!--        <img src="{% static 'app/images/banniere.png' %}">-->
+<!--    </div>-->
+<!--</section>-->
+<div class="container custom-margin">
+    <div class="row mt-5 justify-content-center">
+        <!-- Texte de présentation -->
+        <div class="col-lg-5 mt-5">
+            <h1 class="text-center text-dark fw-bold">Soyez conscient, soyez proactif : protégez vos données  <span>personnelles</span></h1>
+            <p class="text-center">Apprenez à gérer vos données personnelles et à les protéger efficacement.</p>
+        </div>
 
+        <!-- Image -->
+        <div class="col-lg-7">
+            <img src="{% static 'app/images/banniere.png' %}" class="img-fluid" alt="Image">
+        </div>
+    </div>
+</div>
 
-
-    <!-- section Actualite -->
-
-    <section id="Actualités">
-        <h1 class="section_title text-dark fw-bold p-2 fs-2">Actualités</h1>
-<!--        <div class="images">-->
-<!--            <ul>-->
-<!--                <li class="Actualité">-->
-<!--                   <div>-->
-<!--                       <img src="images/car1.jpg" alt="">-->
-<!--                   </div>-->
-<!--                   <span>LAMBORGHINI</span>-->
-<!--                   <a href="#">Consulter</a>-->
-<!--                </li>-->
-<!--                <li class="Actualité">-->
-<!--                    <div>-->
-<!--                        <img src="images/car2.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <span>LAMBORGHINI</span>-->
-<!--                    <a href="#">Consulter</a>-->
-<!--                 </li>-->
-<!--                 <li class="Actualité">-->
-<!--                    <div>-->
-<!--                        <img src="images/car3.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <span>LAMBORGHINI</span>-->
-<!--                    <a href="#">Consulter</a>-->
-<!--                 </li>-->
-<!--                 <li class="Actualité">-->
-<!--                    <div>-->
-<!--                        <img src="images/car4.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <span>LAMBORGHINI</span>-->
-<!--                    <a href="#">Consulter</a>-->
-<!--                 </li>-->
-<!--                 <li class="Actualité">-->
-<!--                    <div>-->
-<!--                        <img src="images/car5.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <span>LAMBORGHINI</span>-->
-<!--                    <a href="#">Consulter</a>-->
-<!--                 </li>-->
-<!--                 <li class="Actualité">-->
-<!--                    <div>-->
-<!--                        <img src="images/car6.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <span>LAMBORGHINI</span>-->
-<!--                    <a href="#">Consulter</a>-->
-<!--                 </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-        {% if actualite %}
-        <div class="container mt-5">
-    <div class="row">
+<!-- section Actualite -->
+<section id="Actualités" class="my-5">
+    <h1 class="section_title text-dark fw-bold p-2 fs-2">Actualités</h1>
+    {% if actualite %}
+    <div class="container mt-5">
+        <div class="row">
             {% for actualite in actualite %}
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card quiz-card">
                     <img src="{{ actualite.image.url }}" class="card-img-top quiz-image" alt="{{ actualite.titre }}">
                     <div class="card-body">
-                        <h5 class="card-title">  <a href= class="list-group-item list-group-item-action">{{ actualite.titre }}</a></h5>
-
-                        <p class="card-text">{{ quiz.contenu }}</p>
+                        <h5 class="card-title ">
+                            <a href="{% url 'actualite_detail' pk=actualite.pk %}" class="text-decoration-none fs-3">
+                    {{ actualite.titre }}
+                </a>
+                        </h5>
+                        <p class="card-text fs-5">{{ actualite.contenu }}</p>
                         <p class="card-text">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
                     </div>
                 </div>
             </div>
             {% endfor %}
-            {% else  %}
-            <p class="my-5">  les actualites seront disponible bientôt</p>
         </div>
     </div>
-            {% endif  %}
+    {% else %}
+    <div class="container mt-5">
+        <p>Le contenu sera disponible bientôt.</p>
+    </div>
+    {% endif %}
+    <form action="{% url 'all_actualites' %}" method="get">
+      <div class="text-center mb-5">
+        <button type="submit" class="btn btn-danger rounded-pill  p-3  my-5">Voir la page des actualites</button>
+      </div>
+    </form>
+</section>
 
 
-    </section>
-
-    <!-- section loi -->
-
-    <section id="Lois" class="">
-        <h1 class="section_title text-dark fw-bold p-2 fs-2">Lois en vigueur</h1>
-        <div class="container mt-5">
-            <div class="row">
-        <div class="list_Lois">
-            {% for loi in lois %}
-
-            <div class="Loi">
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-                <h3>Loi {{ loi.numero_article }}</h3>
-                <p>{{ loi.description|truncatechars:150 }}</p>
-                 <a href="{% url 'loi_detail' loi.id %}" class="read_more">Lire Plus</a>
-            </div>
-<!--            <div class="Loi">-->
-<!--                <i class="fa-solid fa-screwdriver-wrench"></i>-->
-<!--                <h3>Loi 2</h3>-->
-<!--                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis illum natus iste, dicta maiores ipsam.</p>-->
-<!--                 <a href="#" class="read_more">Lire Plus</a>-->
-<!--            </div>-->
-<!--            <div class="Loi">-->
-<!--                <i class="fa-solid fa-screwdriver-wrench"></i>-->
-<!--                <h3>Loi 3</h3>-->
-<!--                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis illum natus iste, dicta maiores ipsam.</p>-->
-<!--                 <a href="#" class="read_more">Lire Plus</a>-->
-
-<!--            </div>-->
-
-
+<!-- section loi -->
+<section id="Lois" class="">
+    <h1 class="section_title text-dark fw-bold p-2 fs-2">Lois en vigueur</h1>
+    <p class="fs-3 my-5">LOI N°001-2021/AN
+PORTANT PROTECTION DES PERSONNES A L’EGARD DU
+TRAITEMENT DES DONNEES A CARACTERE PERSONNEL</p>
+    {% if lois %}
+    <div class="container ">
+        <div class="row">
+            <div class="list_Lois">
+                {% for loi in lois %}
+                <div class="Loi">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <h3>Article n° {{ loi.numero_article }}</h3>
+                    <p>{{ loi.description|truncatechars:150 }}</p>
+                    <a href="{% url 'loi_detail' loi.id %}" class="read_more">Lire Plus</a>
+                </div>
                 {% endfor %}
-
-
-            </div>
-
             </div>
         </div>
+        <form action="{% url 'all_lois' %}" method="get">
+          <div class="text-center mb-5">
+            <button type="submit" class="btn btn-danger rounded-pill  p-3  text-dark fs-3" style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">Voir tous les articles en rigueur</button>
+          </div>
 
-    </section>
-
-
-
-    <!-- section contact -->
-
-    <section id="contact" class="mt-5">
-        <h1 class="section_title text-dark fw-bold p-2 fs-2">Nos Services</h1>
-        <div class="localisation_contact_div">
-            <div class="localisation">
-                <h3>Notre Adresse</h3>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.8720994639843!2d-1.505779425088184!3d12.324394528737528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe2ebe4845555555%3A0xa9ec98e4b4dc1b03!2sCommission%20de%20l&#39;Informatique%20et%20des%20Libert%C3%A9s!5e0!3m2!1sfr!2sbf!4v1711608737652!5m2!1sfr!2sbf" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-
-            <div class="form_contact">
-                <h3>Envoyer un message</h3>
-                <form action="#">
-                    <input type="text"placeholder="Nom">
-                    <input type="email"placeholder="Adresse Mail">
-                    <input type="text"placeholder="Objet">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
-                    <input type="submit" value="Envoyer">
-                </form>
-            </div>
+        </form>
+        <div class="text-center mb-5">
+        <a href="{% static 'app/fichiers/Loi_n001_2021_AN_portant_protection_des_personnes_a_l_egard_du_traitement.pdf' %}" download>
+        <button class="btn btn-danger rounded-pill p-3 text-dark fs-3" style="background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">
+            Télécharger toutes les lois
+        </button>
+        </a>
         </div>
-    </section>
 
+    </div>
+    {% else %}
+    <div class="container mt-5">
+        <p class="">Le contenu sera disponible bientôt.</p>
+    </div>
+    {% endif %}
+</section>
 
-    <script>
-        //menu responsive code JS
+<!-- section contact -->
+<section id="contact" class="mt-5">
+    <h1 class="section_title text-dark fw-bold p-2 fs-2">Nos Services</h1>
+    <div class="localisation_contact_div">
+        <div class="localisation">
+            <h3>Notre Adresse</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.8720994639843!2d-1.505779425088184!3d12.324394528737528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe2ebe4845555555%3A0xa9ec98e4b4dc1b03!2sCommission%20de%20l&#39;Informatique%20et%20des%20Libert%C3%A9s!5e0!3m2!1sfr!2sbf!4v1711608737652!5m2!1sfr!2sbf" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="form_contact">
+            <h3>Envoyer un message</h3>
+            <form action="#">
+                <input type="text"placeholder="Nom">
+                <input type="email"placeholder="Adresse Mail">
+                <input type="text"placeholder="Objet">
+                <textarea name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
+                <input type="submit" value="Envoyer">
+            </form>
+        </div>
+    </div>
+</section>
 
-        var menu_toggle = document.querySelector('.menu_toggle');
-        var menu = document.querySelector('.menu');
-        var menu_toggle_span = document.querySelector('.menu_toggle span');
+<script>
+    //menu responsive code JS
+    var menu_toggle = document.querySelector('.menu_toggle');
+    var menu = document.querySelector('.menu');
+    var menu_toggle_span = document.querySelector('.menu_toggle span');
+    menu_toggle.onclick = function(){
+        menu_toggle.classList.toggle('active');
+        menu_toggle_span.classList.toggle('active');
+        menu.classList.toggle('responsive') ;
+    }
 
-        menu_toggle.onclick = function(){
-            menu_toggle.classList.toggle('active');
-            menu_toggle_span.classList.toggle('active');
-            menu.classList.toggle('responsive') ;
+    // Tableau de textes à afficher
+var texts = [
+    "Vos données personnelles sont précieuses. Apprenez à les protéger avec nous.",
+    "Votre sécurité en ligne compte pour nous. Explorez nos ressources pour rester protégé.",
+    "Vos données, votre choix. Découvrez comment nous vous aidons à protéger votre vie privée sur notre site."
+    // Ajoutez d'autres textes ici si nécessaire
+];
+
+// Index du texte actuellement affiché
+var currentIndex = 0;
+
+// Vitesse d'écriture et d'effacement en millisecondes
+var speed = 100; // Vitesse d'écriture
+var eraseSpeed = 50; // Vitesse d'effacement
+
+// Fonction pour afficher et effacer les textes en boucle
+function displayTexts() {
+    var textElement = document.getElementById("dynamic-text");
+    var currentText = texts[currentIndex];
+    var i = 0;
+
+    // Fonction pour écrire le texte
+    var writeTimer = setInterval(function() {
+        textElement.innerHTML += currentText.charAt(i);
+        i++;
+        if (i >= currentText.length) {
+            clearInterval(writeTimer);
+            // Temps d'affichage avant d'effacer le texte
+            setTimeout(function() {
+                eraseText();
+            }, 1000); // Temps avant d'effacer le texte (1 seconde dans cet exemple)
         }
+    }, speed);
 
-    </script>
-</body>
-</html>
+    // Fonction pour effacer le texte
+    function eraseText() {
+        var eraseTimer = setInterval(function() {
+            var currentLength = textElement.innerHTML.length;
+            if (currentLength === 0) {
+                clearInterval(eraseTimer);
+                // Passer au prochain texte après l'effacement
+                currentIndex = (currentIndex + 1) % texts.length;
+                // Afficher le prochain texte après un court délai
+                setTimeout(displayTexts, 1000); // Temps avant d'afficher le prochain texte (1 seconde dans cet exemple)
+            } else {
+                textElement.innerHTML = textElement.innerHTML.slice(0, -1);
+            }
+        }, eraseSpeed);
+    }
+}
+
+// Appeler la fonction au chargement de la page
+window.onload = function() {
+    displayTexts();
+};
+
+</script>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+{% load static %}
+<!--    <h1 class="text-center my-5">Loi {{ loi.numero_article }}</h1>-->
+<h1 class="text-center my-5" style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">Loi {{ loi.numero_article }}</h1>
+
+    <p class="fs-3">{{ loi.description }}</p>
+    <!-- Autres détails de la loi -->
+
+
+{% endblock  %}
+

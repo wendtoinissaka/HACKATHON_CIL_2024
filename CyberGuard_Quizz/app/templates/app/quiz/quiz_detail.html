@@ -3,8 +3,6 @@
 {% block content %}
 {% load static %}
 
-
-{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Détails du Quiz</title>
@@ -12,48 +10,73 @@
         .hidden {
             display: none;
         }
+
+        /* Styles pour les options de réponse */
+        .response-option {
+            border: 1px solid #ccc; /* Bordure */
+            padding: 10px; /* Espacement intérieur */
+            margin-bottom: 5px; /* Marge en bas */
+            cursor: pointer; /* Curseur pointer pour indiquer l'interactivité */
+            transition: background-color 0.3s; /* Transition en douceur pour l'effet hover */
+            width: 100%; /* Largeur fixe à 100% */
+            height: 50px; /* Hauteur fixe */
+            box-sizing: border-box; /* Inclure la bordure dans les dimensions */
+        }
+
+        /* Effet hover */
+        .response-option:hover {
+            background-color: #f0f0f0; /* Couleur de fond au survol */
+        }
     </style>
 </head>
 
-    <h1>{{ quiz.titre }}</h1>
-    <p>{{ quiz.description }}</p>
-    <h2>Questions:</h2>
-    {% for question in quiz.questions.all %}
-        <form id="form_{{ question.id }}">
-            <p>{{ question.enonce }}</p>
-            <input type="radio" name="choice" value="1">1. {{ question.choix_1 }}<br>
-            <input type="radio" name="choice" value="2">2. {{ question.choix_2 }}<br>
-            <input type="radio" name="choice" value="3">3. {{ question.choix_3 }}<br>
-            <input type="radio" name="choice" value="4">4. {{ question.choix_4 }}<br>
-            <div class="hidden" id="answer_{{ question.id }}">La réponse correcte est: {{ question.reponse_correcte }}</div>
-            <div class="hidden" id="result_{{ question.id }}"></div>
-            <button type="button" onclick="showAnswer({{ question.id }})">Soumettre</button>
-        </form>
-    {% endfor %}
+<h1 class="text-center " style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">{{ quiz.titre }}</h1>
+<p class="my-5 fs-4 text-center">{{ quiz.description }}</p>
+<h2>Questions:</h2>
+{% for question in quiz.questions.all %}
+    <form id="form_{{ question.id }}">
+        <p>{{ question.enonce }}</p>
+        <label class="response-option">
+            <input type="radio" name="choice" value="1"> 1. {{ question.choix_1 }}
+        </label><br>
+        <label class="response-option">
+            <input type="radio" name="choice" value="2"> 2. {{ question.choix_2 }}
+        </label><br>
+        <label class="response-option">
+            <input type="radio" name="choice" value="3"> 3. {{ question.choix_3 }}
+        </label><br>
+        <label class="response-option">
+            <input type="radio" name="choice" value="4"> 4. {{ question.choix_4 }}
+        </label><br>
+        <div class="hidden" id="answer_{{ question.id }}">La réponse correcte est: {{ question.reponse_correcte }}</div>
+        <div class="hidden" id="result_{{ question.id }}"></div>
+        <button type="button" class="btn  rounded-pill p-2 my-3 text-dark " onclick="showAnswer({{ question.id }})" style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">Vérifier ma réponse</button>
+    </form>
+{% endfor %}
 
-    <!-- JavaScript pour afficher la réponse -->
-    <script>
-        function showAnswer(questionId) {
-            var answerDiv = document.getElementById('answer_' + questionId);
-            var resultDiv = document.getElementById('result_' + questionId);
-            var choice = document.querySelector('input[name="choice"]:checked');
-            if (!choice) {
-                resultDiv.innerText = "Veuillez sélectionner une réponse.";
-                resultDiv.style.color = "red";
+<!-- JavaScript pour afficher la réponse -->
+<script>
+    function showAnswer(questionId) {
+        var answerDiv = document.getElementById('answer_' + questionId);
+        var resultDiv = document.getElementById('result_' + questionId);
+        var choice = document.querySelector('input[name="choice"]:checked');
+        if (!choice) {
+            resultDiv.innerText = "Veuillez sélectionner une réponse.";
+            resultDiv.style.color = "red";
+        } else {
+            var selectedChoice = parseInt(choice.value);
+            var correctAnswer = parseInt(answerDiv.innerText.split(":")[1].trim());
+            if (selectedChoice === correctAnswer) {
+                resultDiv.innerText = "Votre réponse est correcte!";
+                resultDiv.style.color = "green";
             } else {
-                var selectedChoice = parseInt(choice.value);
-                var correctAnswer = parseInt(answerDiv.innerText.split(":")[1].trim());
-                if (selectedChoice === correctAnswer) {
-                    resultDiv.innerText = "Votre réponse est correcte!";
-                    resultDiv.style.color = "green";
-                } else {
-                    resultDiv.innerText = "Votre réponse est incorrecte.";
-                    resultDiv.style.color = "red";
-                    answerDiv.style.display = 'block';
-                }
+                resultDiv.innerText = "Votre réponse est incorrecte.";
+                resultDiv.style.color = "red";
+                answerDiv.style.display = 'block';
             }
-            resultDiv.style.display = 'block';
         }
-    </script>
+        resultDiv.style.display = 'block';
+    }
+</script>
 
 {% endblock %}

@@ -5,8 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseBadRequest
 
 from .forms import ContactForm
-from .models import Quiz, Actualite, Loi
-
+from .models import Quiz, Actualite, Loi, RessourceEducative, RessourcePdf
 
 # Create your views here.
 # def home(request):
@@ -17,19 +16,55 @@ from .models import Quiz, Actualite, Loi
 
 import random
 
+# def home(request):
+#     actualites = Actualite.objects.all()
+#     lois = Loi.objects.all()
+#     random_lois = random.sample(list(lois), min(len(lois), 10))  # Sélectionne aléatoirement 5 lois
+#     return render(request, 'app/home.html', {'actualite': actualites, 'lois': random_lois})
+
+
 def home(request):
     actualites = Actualite.objects.all()
     lois = Loi.objects.all()
-    random_lois = random.sample(list(lois), min(len(lois), 10))  # Sélectionne aléatoirement 5 lois
-    return render(request, 'app/home.html', {'actualite': actualites, 'lois': random_lois})
+
+    query = request.GET.get('q')
+    if query:
+        try:
+            lois = Loi.objects.filter(numero_article=int(query))
+        except ValueError:
+            lois = Loi.objects.none()  # Aucun résultat si la recherche n'est pas un entier
+
+    random_lois = random.sample(list(lois), min(len(lois), 10))  # Sélectionne aléatoirement 10 lois (ou moins si moins de 10 résultats)
+
+    return render(request, 'app/home.html', {'actualites': actualites, 'lois': random_lois})
+
 
 def all_lois(request):
     lois = Loi.objects.all()
-    return render(request, 'app/quiz/all_lois.html', {'lois': lois})
+    return render(request, 'app/all_lois.html', {'lois': lois})
+
+def all_actualites(request):
+    actualites = Actualite.objects.all()
+    return render(request, 'app/all_actualites.html', {'actualites': actualites})
+
+
+def actualite_detail(request, pk):
+    actualite = get_object_or_404(Actualite, pk=pk)
+    return render(request, 'app/actualite_detail.html', {'actualite': actualite})
+
+
+def all_ressources(request):
+    ressources = RessourceEducative.objects.all()
+    return render(request, 'app/all_ressources.html', {'ressources': ressources})
+
+def all_pdf_ressources(request):
+    ressources_pdf = RessourcePdf.objects.all()
+    return render(request, 'app/all_pdf_ressources.html', {'ressources_pdf': ressources_pdf})
+
 
 def loi_detail(request, loi_id):
     loi = get_object_or_404(Loi, pk=loi_id)
-    return render(request, 'app/quiz/loi_detail.html', {'loi': loi})
+    return render(request, 'app/loi_detail.html', {'loi': loi})
 
 
 # def register(request):

@@ -1,23 +1,24 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-<h1 class="mb-4 text-dark text-center">Liste des quizz</h1>
+<h1 class="mb-4 text-dark text-center">Testez vos connaissances et découvrez comment protéger vos données personnelles </h1>
 <div class="container mt-5">
         <div class="row">
-            {% for quiz in quizzes %}
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card quiz-card">
-                    <img src="{{ quiz.image.url }}" class="card-img-top quiz-image" alt="{{ quiz.titre }}">
-                    <div class="card-body">
-                        <h5 class="card-title">                <a href="{% url 'quiz_detail' quiz.id %}" class="text-decoration-none text-center list-group-item-action">{{ quiz.titre }}</a></h5>
-
-                        <p class="card-text">{{ quiz.description }}</p>
-                        <p class="card-text">Niveau: {{ quiz.difficulte }}</p>
-<!--                        <p class="card-text">Dernière modification : {{ quiz.date_modification|date:"d F Y à H:i" }}</p>-->
-                    </div>
-                </div>
+    {% for quiz in quizzes %}
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card quiz-card">
+            <div class="fruite-img min-height-200">
+                <a href="{% url 'quiz_detail' quiz.id %}" class="text-decoration-none text-center text-primary fs-3 list-group-item-action"><img src="{{ quiz.image.url }}" class="card-img-top quiz-image" alt="{{ quiz.titre }}"></a>
             </div>
-            {% endfor %}
+            <div class="card-body">
+                <h5 class="card-title text-primary"><a href="{% url 'quiz_detail' quiz.id %}" class="text-decoration-none text-center text-primary fs-1 list-group-item-action">{{ quiz.titre }}</a></h5>
+                <p class="card-text fs-4">{{ quiz.description }}</p>
+                <p class="card-text text-danger fs-4">Niveau: {{ quiz.difficulte }}</p>
+            </div>
         </div>
+    </div>
+    {% endfor %}
+</div>
+
     </div>
 {% endblock %}
