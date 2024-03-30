@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseBadRequest
 
-from .forms import ContactForm, FuturePartenaireForm
+from .forms import ContactForm, FuturePartenaireForm, SignalementForm
 from .models import Quiz, Actualite, Loi, RessourceEducative, RessourcePdf, RessourceVideo, ConseilSecurite, Partenaire
 
 # Create your views here.
@@ -46,22 +46,46 @@ def partenaire(request):
     return render(request, 'app/base.html', {'partenaires': partenaires})
 
 
+# def home(request):
+#     actualites = Actualite.objects.all()
+#     lois = Loi.objects.all()
+#
+#     if request.method == 'POST':  # Vérifiez si le formulaire a été soumis
+#         form = ContactForm(request.POST)  # Créez une instance du formulaire avec les données soumises
+#         if form.is_valid():  # Vérifiez si le formulaire est valide
+#             form.save()  # Enregistrez les données du formulaire dans la base de données en utilisant la vue contact existante
+#             return render(request, 'app/confirmation.html')  # Redirigez vers une page de confirmation ou affichez un message de confirmation
+#     else:
+#         form = ContactForm()  # Créez une instance vide du formulaire s'il s'agit d'une requête GET
+#
+#     random_lois = random.sample(list(lois), min(len(lois), 10))  # Sélectionne aléatoirement 10 lois (ou moins si moins de 10 résultats)
+#
+#     return render(request, 'app/home.html', {'actualites': actualites,'partenaire': partenaire, 'lois': random_lois, 'form': form})
+#
+from .models import Partenaire  # Importez le modèle Partenaire
+
+def base(request):
+    partenaires = Partenaire.objects.all()  # Récupérez tous les partenaires de la base de données
+
+    return render(request, 'app/base.html', {'partenaires': partenaires})
+
 def home(request):
     actualites = Actualite.objects.all()
-    partenaire = Partenaire.objects.all()
     lois = Loi.objects.all()
 
-    if request.method == 'POST':  # Vérifiez si le formulaire a été soumis
-        form = ContactForm(request.POST)  # Créez une instance du formulaire avec les données soumises
-        if form.is_valid():  # Vérifiez si le formulaire est valide
-            form.save()  # Enregistrez les données du formulaire dans la base de données en utilisant la vue contact existante
-            return render(request, 'app/confirmation.html')  # Redirigez vers une page de confirmation ou affichez un message de confirmation
+    partenaires = Partenaire.objects.all()  # Récupérez tous les partenaires de la base de données
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'app/confirmation.html')
     else:
-        form = ContactForm()  # Créez une instance vide du formulaire s'il s'agit d'une requête GET
+        form = ContactForm()
 
-    random_lois = random.sample(list(lois), min(len(lois), 10))  # Sélectionne aléatoirement 10 lois (ou moins si moins de 10 résultats)
+    random_lois = random.sample(list(lois), min(len(lois), 10))
 
-    return render(request, 'app/home.html', {'actualites': actualites,'partenaire': partenaire, 'lois': random_lois, 'form': form})
+    return render(request, 'app/home.html', {'actualites': actualites, 'partenaires': partenaires, 'lois': random_lois, 'form': form})
 
 
 def all_lois(request):
@@ -228,3 +252,14 @@ def future_partenaire(request):
         form = FuturePartenaireForm()
 
     return render(request, 'app/future_partenaire.html', {'form': form})
+
+
+def signalement(request):
+    if request.method == 'POST':
+        form = SignalementForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'app/confirmation.html')
+    else:
+        form = SignalementForm()
+    return render(request, 'app/signalement.html', {'form': form})

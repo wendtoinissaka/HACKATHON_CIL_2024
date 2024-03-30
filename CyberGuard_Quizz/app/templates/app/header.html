@@ -1,7 +1,27 @@
-{% extends 'app/base.html' %}
 {% load static %}
 
-{% block header %}
-<div>je suis en header</div>
+    <!-- header  -->
+    <header class="bg_custom">
+        <!-- menu responsive -->
 
-{% endblock %}
+        <div class="menu_toggle">
+            <span></span>
+        </div>
+
+        <div class="logo">
+            <a class="" href="{% url 'home' %}"><img id="logo" src="{% static 'app/images/logo.png' %}" style="height:50px;">
+</a>
+
+        </div>
+
+        <ul class="menu">
+    <li><a href="{% url 'conseils_securite' %}" class="btn">Conseils de sécurité</a></li>
+    <li><a href="{% url 'all_actualites' %}" class="btn">Actualités et tendance</a></li>
+    <li><a href="{% url 'display_quiz' %}" class="btn">Quizz Interactifs</a></li>
+    <li><a href="{% url 'video_list' %}" class="btn">Formations</a></li>
+    <li><a href="{% url 'all_pdf_ressources' %}" class="btn">Ressources</a></li>
+    <li><a href="{% url 'signalement' %}" class="btn">Signaler Violations</a></li>
+
+</ul>
+
+    </header>

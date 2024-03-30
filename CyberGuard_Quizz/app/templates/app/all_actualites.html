@@ -39,7 +39,7 @@ ite.image.url }}" class="card-img-top" alt="{{ actualite.titre }}">-->
                 </a>
                         </h5>
                         <p class="card-text fs-5">{{ actualite.contenu|truncatechars:200 }}</p>
-                        <p class="card-text">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
+                        <p class="card-text text-danger fs-4">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
                     </div>
                 </div>
             </div>

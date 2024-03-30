@@ -1,7 +1,25 @@
-{% extends 'app/base.html' %}
 {% load static %}
+    <footer  class="text-dark mt-5 text-center">
+        <h2 class="my-3">Nos Partenaires</h2>
+        <div class="d-flex justify-content-center align-items-center gap-5">
+            {% for partenaire in partenaires %}
+    <div>
+        <div class="mb-5">
+            <img src="{{ partenaire.image.url }}"  class="card-img-top quiz-image rounded-pill " alt="{{ partenaire.nom }}" style="width:100px; height:100px;">
+            <p class="text-center mt-2">{{ partenaire.nom|truncatechars:10  }}</p>
+        </div>
+    </div>
+{% endfor %}
 
-{% block footer %}
-<div> footer</div>
+<!--        <div class="mb-5">-->
+<!--            <img src="{% static 'app/images/ibam.png' %}" class="card-img-top quiz-image rounded-pill " alt="{{ actualite.titre }}" style="width:100px; height:100px;">-->
+<!--            <p class="text-center mt-2">IBAM</p>-->
+<!--        </div>-->
+        </div>
 
-{% endblock %}
+<div class="mb-5"><a href="{% url 'future_partenaire'  %}" class="btn btn-danger rounded-pill text-center text-decoration-none text-white  p-3 fs-5">Devenir Partenaire</a></div>
+        <div>
+
+            <p> © CIL Mars 2024 All Rights Reserved. <span style="" class="bg-danger text-white p-2"> N° Ver: 80 00 13 00 </span> </p>
+        </div>
+    </footer>

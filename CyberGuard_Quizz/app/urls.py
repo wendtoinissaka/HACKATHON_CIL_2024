@@ -19,6 +19,7 @@ urlpatterns = [
     path('check_answer/<int:question_id>/', views.check_answer, name='check_answer'),
     path('partenaire/', views.partenaire, name='partenaire'),
     path('future_partenaire/', views.future_partenaire, name='future_partenaire'),
+    path('signalement/', views.signalement, name='signalement'),
     path('contact/', views.contact, name='contact'),
 ]
 

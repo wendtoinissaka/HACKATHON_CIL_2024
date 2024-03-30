@@ -1,5 +1,5 @@
 from django import forms
-from .models import MessageContact, FuturePartenaire
+from .models import MessageContact, FuturePartenaire, SignalementViolation
 from django_recaptcha.fields import ReCaptchaField
 
 
@@ -27,11 +27,9 @@ class FuturePartenaireForm(forms.ModelForm):
         super(FuturePartenaireForm, self).__init__(*args, **kwargs)
 
 
-# class FuturePartenaireForm(forms.ModelForm):
-#     class Meta:
-#         model = FuturePartenaire
-#         exclude = ['statut']  # Exclure les champs 'notes' et 'statut'
-#
-#     def __init__(self, *args, **kwargs):
-#         super(FuturePartenaireForm, self).__init__(*args, **kwargs)
+class SignalementForm(forms.ModelForm):
+    captcha = ReCaptchaField()
 
+    class Meta:
+        model = SignalementViolation
+        fields = ['description', 'preuves','type_violation', 'gravite', 'captcha']

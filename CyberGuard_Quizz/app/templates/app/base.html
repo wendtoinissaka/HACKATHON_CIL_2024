@@ -39,31 +39,9 @@
 
 <div style="margin-top: calc(3.5rem + 80px);"> <!-- 3.5rem est la hauteur estimée de votre navbar, 16px est un exemple de marge que vous pouvez ajuster -->
 </div>
-    <!-- header  -->
-    <header class="bg_custom">
-        <!-- menu responsive -->
 
-        <div class="menu_toggle">
-            <span></span>
-        </div>
-
-        <div class="logo">
-            <a class="" href="{% url 'home' %}"><img id="logo" src="{% static 'app/images/logo.png' %}" style="height:50px;">
-</a>
-
-        </div>
-
-        <ul class="menu">
-    <li><a href="{% url 'conseils_securite' %}" class="btn">Conseils de sécurité</a></li>
-    <li><a href="{% url 'all_actualites' %}" class="btn">Actualités et tendance</a></li>
-    <li><a href="{% url 'display_quiz' %}" class="btn">Quizz Instructifs</a></li>
-    <li><a href="{% url 'video_list' %}" class="btn">Videos Cas Pratique</a></li>
-    <li><a href="{% url 'all_pdf_ressources' %}" class="btn">Ressources</a></li>
-
-</ul>
-
-    </header>
-
+    <!-- Navbar -->
+    {% include "app/header.html" %}
 
     <!-- section Acceuil -->
 <div class="container">
@@ -75,27 +53,13 @@
 
 
 
+
+
+
 {% block footer %}
-    <footer  class="text-dark mt-5 text-center">
-        <h2>Nos Partenaires</h2>
-        <div class="d-flex justify-content-center align-items-center gap-5">
-        <div class="mb-5">
-            <img src="{% static 'app/images/ist_logo.jpeg' %}" class="card-img-top quiz-image rounded-pill " alt="{{ actualite.titre }}" style="width:100px; height:100px;">
-            <p class="text-center mt-2">IST</p>
-        </div>
-        <div class="mb-5">
-            <img src="{% static 'app/images/ibam.png' %}" class="card-img-top quiz-image rounded-pill " alt="{{ actualite.titre }}" style="width:100px; height:100px;">
-            <p class="text-center mt-2">IBAM</p>
-        </div>
-        </div>
 
-<div class="mb-5"><a href="{% url 'future_partenaire'  %}" class="btn btn-danger rounded-pill text-center text-decoration-none text-white  p-3 fs-5">Devenir Partenaire</a></div>
-        <div>
-
-            <p> © CIL Mars 2024 All Rights Reserved. <span style="" class="bg-danger text-white p-2"> N° Ver: 80 00 13 00 </span> </p>
-        </div>
-    </footer>
-
+    <!-- Footer -->
+    {% include "app/footer.html" %}
 {% endblock %}
 <!-- Optional JavaScript; choose one of the two! -->
 

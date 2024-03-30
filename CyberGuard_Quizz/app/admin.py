@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import ConseilDeSecurite, Actualite, Quiz, Question, Loi, Titre_loi, Chapitre_loi, RessourceEducative, \
-    RessourcePdf, RessourceVideo, ConseilSecurite, MessageContact, Partenaire, FuturePartenaire
+    RessourcePdf, RessourceVideo, ConseilSecurite, MessageContact, Partenaire, FuturePartenaire, SignalementViolation
 
 
 @admin.register(ConseilDeSecurite)
@@ -80,8 +80,9 @@ class FuturePartenaireAdmin(admin.ModelAdmin):
     list_display = ('nom', 'email','telephone', 'secteur_activite')
 
 
-# admin.site.register(ConseilDeSecurite, ConseilDeSecuriteAdmin)
-# admin.site.register(Actualite, ActualiteAdmin)
-# admin.site.register(Quiz, QuizAdmin)
-# admin.site.register(Question, QuestionAdmin)
-# admin.site.register(Loi, LoiAdmin)
+@admin.register(SignalementViolation)
+class SignalementViolationAdmin(admin.ModelAdmin):
+    list_display = ('description','type_violation', 'gravite','statut')
+    list_filter = ('type_violation', 'gravite', 'statut')
+
+

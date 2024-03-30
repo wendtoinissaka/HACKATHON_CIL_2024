@@ -168,7 +168,7 @@ class MessageContact(models.Model):
 
 class Partenaire(models.Model):
     nom = models.CharField(max_length=200)
-    logo = models.ImageField(upload_to='app/partenaires/', blank=True, null=True)
+    image = models.ImageField(upload_to='app/partenaires/', blank=True, null=True)
     lien_site_web = models.URLField(blank=True, null=True)  # Champ pour le lien du site web
     email = models.EmailField()
     numero = models.IntegerField(blank=True, null=True)
@@ -177,7 +177,7 @@ class FuturePartenaire(models.Model):
     nom = models.CharField(max_length=100)
     logo = models.ImageField(upload_to='app/future_partenaires/', blank=True, null=True)
     lien_site_web = models.URLField(blank=True, null=True)  # Champ pour le lien du site web
-    telephone = models.CharField(max_length=20)
+    telephone = models.IntegerField(blank=True, null=True)
     email = models.EmailField()
     adresse = models.CharField(max_length=255)
     type_partenaire = models.CharField(max_length=50,
@@ -193,3 +193,32 @@ class FuturePartenaire(models.Model):
         return self.nom
 
 
+class SignalementViolation(models.Model):
+    TYPE_CHOICES = (
+        ('fuite_donnees', 'Fuite de données personnelles'),
+        ('acces_non_autorise', 'Accès non autorisé'),
+        ('hameconnage', 'Hameçonnage (phishing)'),
+        ('autre', 'Autre'),
+    )
+    GRAVITE_CHOICES = (
+        ('faible', 'Faible'),
+        ('moyenne', 'Moyenne'),
+        ('elevee', 'Élevée'),
+    )
+    STATUT_CHOICES = (
+        ('en_cours', 'En cours d\'investigation'),
+        ('resolu', 'Résolu'),
+        ('ferme', 'Fermé'),
+    )
+
+    type_violation = models.CharField(max_length=50, choices=TYPE_CHOICES, default='autre')
+    description = models.TextField()
+    preuves = models.FileField(upload_to='app/signalements/', blank=True, null=True)
+    date_incident = models.DateTimeField(auto_now_add=True)
+    gravite = models.CharField(max_length=10, choices=GRAVITE_CHOICES, default='faible')
+    # systeme_affecte = models.CharField(max_length=255, blank=True, null=True)
+    # mesures_prises = models.TextField(blank=True, null=True)
+    statut = models.CharField(max_length=10, choices=STATUT_CHOICES, default='en_cours')
+
+    def __str__(self):
+        return f"Signalement #{self.id} - {self.type_violation}"

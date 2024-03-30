@@ -1,0 +1,113 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    .form-container {
+        width: 50%;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .form-container form {
+        margin-bottom: 10px;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="email"],
+    .form-container input[type="url"],
+    .form-container textarea,
+    .form-container select {
+        width: calc(100% - 16px); /* Ajustement pour le padding */
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-top: 3px;
+        margin-bottom: 10px;
+    }
+
+    .form-container button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-container button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Styles pour la disposition flex */
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .flex-container > div {
+        width: 48%;
+    }
+
+    @media screen and (max-width: 768px) {
+        .flex-container > div {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+
+    /* Style pour les erreurs de formulaire */
+    .form-field ul.errors {
+        margin: 5px 0 0;
+        padding: 0;
+        color: red;
+    }
+
+    /* Style pour le champ de date */
+    .form-container input[type="date"] {
+        width: calc(100% - 16px); /* Ajustement pour le padding */
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-top: 3px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="flex-container">
+    <div class="form-container fs-4 bg-white">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="errors">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger bg-danger rounded-pill p-3 px-5 my-5">Soumettre</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <img src="{% static 'app/images/img.png' %}" alt="Image" style="max-width: 100%; height: auto;">
+    </div>
+</div>
+{% endblock %}
