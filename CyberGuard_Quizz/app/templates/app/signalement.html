@@ -82,9 +82,11 @@
         margin-bottom: 10px;
     }
 </style>
+            <h1 class="text-center text-dark fw-bold my-5">Signaler en tout anonymant, les services dont vous douter de l'efficacité sur la protection ou l'utilisation de vos <span class="text-danger fs-1">données personnelles</span></h1>
 
 <div class="flex-container">
     <div class="form-container fs-4 bg-white">
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
