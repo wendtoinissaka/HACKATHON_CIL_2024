@@ -4,8 +4,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseBadRequest
 
-from .forms import ContactForm
-from .models import Quiz, Actualite, Loi, RessourceEducative, RessourcePdf
+from .forms import ContactForm, FuturePartenaireForm
+from .models import Quiz, Actualite, Loi, RessourceEducative, RessourcePdf, RessourceVideo, ConseilSecurite, Partenaire
 
 # Create your views here.
 # def home(request):
@@ -15,7 +15,7 @@ from .models import Quiz, Actualite, Loi, RessourceEducative, RessourcePdf
 #     return render(request, 'app/home.html',{'actualite': actualites, 'lois': lois})
 
 import random
-
+from itertools import groupby  # Importez groupby depuis itertools
 # def home(request):
 #     actualites = Actualite.objects.all()
 #     lois = Loi.objects.all()
@@ -23,20 +23,45 @@ import random
 #     return render(request, 'app/home.html', {'actualite': actualites, 'lois': random_lois})
 
 
+# def home(request):
+#     actualites = Actualite.objects.all()
+#     lois = Loi.objects.all()
+#
+#     query = request.GET.get('q')
+#     if query:
+#         try:
+#             lois = Loi.objects.filter(numero_article=int(query))
+#             # Passer un paramètre d'ancrage pour diriger vers la section des lois
+#             anchor = "#Lois"
+#         except ValueError:
+#             lois = Loi.objects.none()  # Aucun résultat si la recherche n'est pas un entier
+#             anchor=""
+#     random_lois = random.sample(list(lois), min(len(lois), 10))  # Sélectionne aléatoirement 10 lois (ou moins si moins de 10 résultats)
+#
+#     return render(request, 'app/home.html', {'actualites': actualites, 'lois': random_lois})
+
+def partenaire(request):
+    partenaires = Partenaire.objects.all()
+
+    return render(request, 'app/base.html', {'partenaires': partenaires})
+
+
 def home(request):
     actualites = Actualite.objects.all()
+    partenaire = Partenaire.objects.all()
     lois = Loi.objects.all()
 
-    query = request.GET.get('q')
-    if query:
-        try:
-            lois = Loi.objects.filter(numero_article=int(query))
-        except ValueError:
-            lois = Loi.objects.none()  # Aucun résultat si la recherche n'est pas un entier
+    if request.method == 'POST':  # Vérifiez si le formulaire a été soumis
+        form = ContactForm(request.POST)  # Créez une instance du formulaire avec les données soumises
+        if form.is_valid():  # Vérifiez si le formulaire est valide
+            form.save()  # Enregistrez les données du formulaire dans la base de données en utilisant la vue contact existante
+            return render(request, 'app/confirmation.html')  # Redirigez vers une page de confirmation ou affichez un message de confirmation
+    else:
+        form = ContactForm()  # Créez une instance vide du formulaire s'il s'agit d'une requête GET
 
     random_lois = random.sample(list(lois), min(len(lois), 10))  # Sélectionne aléatoirement 10 lois (ou moins si moins de 10 résultats)
 
-    return render(request, 'app/home.html', {'actualites': actualites, 'lois': random_lois})
+    return render(request, 'app/home.html', {'actualites': actualites,'partenaire': partenaire, 'lois': random_lois, 'form': form})
 
 
 def all_lois(request):
@@ -46,6 +71,12 @@ def all_lois(request):
 def all_actualites(request):
     actualites = Actualite.objects.all()
     return render(request, 'app/all_actualites.html', {'actualites': actualites})
+
+
+def video_list(request):
+    videos = RessourceVideo.objects.all()
+    return render(request, 'app/video_list.html', {'videos': videos})
+
 
 
 def actualite_detail(request, pk):
@@ -65,6 +96,16 @@ def all_pdf_ressources(request):
 def loi_detail(request, loi_id):
     loi = get_object_or_404(Loi, pk=loi_id)
     return render(request, 'app/loi_detail.html', {'loi': loi})
+
+
+def conseils_securite(request):
+    conseils = ConseilSecurite.objects.all().order_by('categorie', 'numero').values()
+
+    conseils_par_categorie = {}
+    for categorie, conseils_dans_categorie in groupby(conseils, key=lambda x: x['categorie']):
+        conseils_par_categorie[categorie] = list(conseils_dans_categorie)
+
+    return render(request, 'app/conseils_securite.html', {'conseils_par_categorie': conseils_par_categorie})
 
 
 # def register(request):
@@ -99,57 +140,11 @@ def displayQuizz(request):
 
 
 
-# def quiz_detail(request, quiz_id):
-#     quiz = get_object_or_404(Quiz, id=quiz_id)
-#     return render(request, 'app/quiz/quiz_detail.html', {'quiz': quiz})
-
-
-# def quiz_detail(request, quiz_id):
-#     quiz = get_object_or_404(Quiz, id=quiz_id)
-#     questions = quiz.questions.all()
-#
-#     if request.method == 'POST':
-#         score = 0
-#         total_questions = 0
-#         for question in questions:
-#             user_answer = request.POST.get('question' + str(question.id))
-#             if user_answer:
-#                 total_questions += 1
-#                 if int(user_answer) == question.reponse_correcte:
-#                     score += 1
-#         return JsonResponse({'score': score, 'total_questions': total_questions})
-#
-#     return render(request, 'app/quiz/quiz_detail.html', {'quiz': quiz, 'questions': questions})
-
 from django.shortcuts import render, get_object_or_404
 from .models import Quiz
 
 
 
-
-from django.shortcuts import render, get_object_or_404
-from random import sample
-from .models import Quiz, Question
-
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Quiz, Question
-from random import sample
-
-# def quiz_detail(request, quiz_id):
-#     quiz = get_object_or_404(Quiz, id=quiz_id)
-#     score = None
-#     selected_questions = None
-#
-#     if request.method == 'POST':
-#         if 'question_count' in request.POST:
-#             question_count = int(request.POST.get('question_count'))
-#             all_questions = quiz.questions.all()
-#             selected_questions = sample(list(all_questions), min(question_count, len(all_questions)))
-#         elif 'verify' in request.POST:
-#             questions = quiz.questions.all()
-#             score = calculate_score(request, questions)
-#
-#     return render(request, 'app/quiz/quiz_detail.html', {'quiz': quiz, 'selected_questions': selected_questions, 'score': score})
 
 def quiz_detail(request, quiz_id):
     quiz = Quiz.objects.get(pk=quiz_id)
@@ -170,56 +165,9 @@ def check_answer(request, question_id):
             messages.error(request, 'Veuillez sélectionner une réponse.')
     return redirect('quiz_detail', quiz_id=question.quiz.id)
 
-# def calculate_score(request, questions):
-#     score = 0
-#     total_questions = len(questions)
-#     for question in questions:
-#         choice_id = int(request.POST.get(f'question{question.id}', 0))
-#         if choice_id == question.reponse_correcte:
-#             score += 1
-#     return score, total_questions
-
-# def show_correction(request):
-#     # Code pour afficher les corrections et le score
-#     return render(request, 'app/quiz/corrections.html')
 
 
 
-# def show_correction(request):
-#     if request.method == 'POST':
-#         selected_question_ids = request.POST.getlist('selected_questions')
-#         selected_questions = Question.objects.filter(id__in=selected_question_ids)
-#         quiz_id = int(request.POST.get('quiz_id'))
-#         quiz = get_object_or_404(Quiz, id=quiz_id)
-#         # Calculer le score
-#         score = calculate_score(request, selected_questions)
-#         # Rendre le gabarit de correction avec les données nécessaires
-#         return render(request, 'app/quiz/corrections.html', {'quiz': quiz, 'score': score, 'selected_questions': selected_questions})
-#     else:
-#         # Rediriger vers la page d'accueil si la méthode de demande n'est pas POST
-#         return redirect('home')
-
-
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Quiz, Question
-
-# def show_correction(request):
-#     if request.method == 'POST':
-#         selected_question_ids = request.POST.getlist('selected_questions')
-#         quiz_id = request.POST.get('quiz_id')  # Récupérer l'ID du quiz depuis le formulaire
-#         if quiz_id:
-#             quiz = get_object_or_404(Quiz, id=quiz_id)
-#             selected_questions = Question.objects.filter(id__in=selected_question_ids)
-#             # Calculer le score
-#             score = calculate_score(request, selected_questions)
-#             # Rendre le gabarit de correction avec les données nécessaires
-#             return render(request, 'app/quiz/corrections.html', {'quiz': quiz, 'score': score, 'selected_questions': selected_questions})
-#         else:
-#             # Rediriger vers la page d'accueil si l'ID du quiz est manquant
-#             return redirect('home')
-#     else:
-#         # Rediriger vers la page d'accueil si la méthode de demande n'est pas POST
-#         return redirect('home')
 from django.shortcuts import render
 from .models import Question
 
@@ -255,21 +203,28 @@ def calculate_score_and_corrections(request, questions):
 
 
 
-def contactUs(request):
+
+
+def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
-            send_mail(
-                'CyberGuard ',
-                message,
-                email,
-                ['lacapacitee@gmail.com', 'lacapacitee@gmail.com'],
-                fail_silently=False,
-            )
-            return render(request, 'app/contact_success.html')
+            form.save()
+            return render(request, 'app/confirmation.html')
     else:
         form = ContactForm()
-    return render(request, 'app/home.html', {'form': form})
+    return render(request, 'app/formulaire_contact.html', {'form': form})
+
+
+def future_partenaire(request):
+    if request.method == 'POST':
+        form = FuturePartenaireForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'app/confirmation.html')
+
+            # Redirection ou traitement supplémentaire ici
+    else:
+        form = FuturePartenaireForm()
+
+    return render(request, 'app/future_partenaire.html', {'form': form})

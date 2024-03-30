@@ -1,21 +1,59 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-<div class="container mt-5 fs-4">
-    <h1 class="text-center mb-4">Liste complète des actualités</h1>
-    <div class="row">
-        {% for actualite in actualites %}
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <img src="{{ actualite.image.url }}" class="card-img-top" alt="{{ actualite.titre }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ actualite.titre }}</h5>
-                    <p class="card-text">{{ actualite.contenu }}</p>
-                    <p class="card-text"><small class="text-muted">Publié le {{ actualite.date_publication }}</small></p>
+
+<!--<div class="container mt-5 fs-4">-->
+<!--    <h1 class="text-center mb-4">Liste complète des actualités</h1>-->
+<!--    <div class="row">-->
+<!--        {% for actualite in actualites %}-->
+<!--        <div class="col-md-6 mb-4">-->
+<!--            <div class="card">-->
+<!--                <img src="{{
+ite.image.url }}" class="card-img-top" alt="{{ actualite.titre }}">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">                <a href="{% url 'actualite_detail' pk=actualite.pk %}" class="text-decoration-none fs-3">{{ actualite.titre }}</a></h5>-->
+<!--                    <p class="card-text">{{ actualite.contenu }}</p>-->
+<!--                    <p class="card-text"><small class="text-muted">Publié le {{ actualite.date_publication }}</small></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- section Actualite -->
+<section id="Actualités" class="my-5 ">
+    <h1 class="text-center mb-5"><span>  Faites de la veille sur la protection de vos données personnelles </span> </h1>
+
+    {% if actualites %}
+    <div class="container mt-5">
+        <div class="row">
+            {% for actualite in actualites %}
+            <div class="col-lg-3 col-md-6 mb-4 fs-2">
+                <div class="card quiz-card">
+                    <img src="{{ actualite.image.url }}" class="card-img-top quiz-image" alt="{{ actualite.titre }}">
+                    <div class="card-body">
+                        <h5 class="card-title ">
+                            <a href="{% url 'actualite_detail' pk=actualite.pk %}" class="text-decoration-none fs-3">
+                    {{ actualite.titre }}
+                </a>
+                        </h5>
+                        <p class="card-text fs-5">{{ actualite.contenu|truncatechars:200 }}</p>
+                        <p class="card-text">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+    {% else %}
+    <div class="container mt-5">
+        <p>Le contenu sera disponible bientôt.</p>
+    </div>
+    {% endif %}
+
+</section>
+
+
+
 {% endblock content %}

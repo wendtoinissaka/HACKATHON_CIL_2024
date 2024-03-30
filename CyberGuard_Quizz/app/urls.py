@@ -8,6 +8,8 @@ urlpatterns = [
     path('actualites/<int:pk>/', views.actualite_detail, name='actualite_detail'),
     path('ressources/', views.all_ressources, name='all_ressources'),
     path('ressources-pdf/', views.all_pdf_ressources, name='all_pdf_ressources'),
+    path('conseils-securite/', views.conseils_securite, name='conseils_securite'),
+    path('videos/', views.video_list, name='video_list'),
     path('loi/<int:loi_id>/', views.loi_detail, name='loi_detail'),
     # path("register/", views.register, name="register"),
     # path("login/", views.login, name="login"),
@@ -15,6 +17,9 @@ urlpatterns = [
     path('quiz_detail/<int:quiz_id>/', views.quiz_detail, name='quiz_detail'),
     path('show_correction/', views.show_correction, name='show_correction'),
     path('check_answer/<int:question_id>/', views.check_answer, name='check_answer'),
+    path('partenaire/', views.partenaire, name='partenaire'),
+    path('future_partenaire/', views.future_partenaire, name='future_partenaire'),
+    path('contact/', views.contact, name='contact'),
 ]
 
 

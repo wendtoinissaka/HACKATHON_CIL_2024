@@ -1,0 +1,187 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+
+<style>
+    /* Styles pour les conteneurs de vidéos */
+    .categories-container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+         /*  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    }
+
+    .category {
+        margin-bottom: 30px;
+    }
+
+    .category h2 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 50px;
+    }
+
+
+    /* Styles pour les conteneurs de vidéos */
+    .video-container {
+        width: 100%;
+        display: flex;
+        /* Utilisation de flexbox pour la mise en page */
+        flex-wrap: wrap;
+        /* Pour permettre le retour à la ligne si nécessaire */
+        justify-content: center;
+        /* Aligner les vidéos à gauche */
+        gap: 5%;
+        /* Espacement entre les vidéos */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 1.5rem;
+    }
+
+    /* Styles pour chaque vidéo */
+    .video-player {
+        border: 1px solid;
+        padding: 1.5px;
+        margin: 2rem 0;
+        width: 560px;
+        /* Largeur fixe des vidéos */
+        height: 315px;
+        /* Hauteur fixe des vidéos */
+    }
+</style>
+
+    <h1 class="text-center mb-5">Déjouez <span class="text-danger"> les dangers </span>: Les clés de la sécurité à portée de clic!</h1>
+
+
+
+
+    <!-- Conteneur pour les catégories avec leurs vidéos -->
+    <div class="categories-container mt-5"></div>
+    <script>
+        //menu responsive code JS
+
+        var menu_toggle = document.querySelector('.menu_toggle');
+        var menu = document.querySelector('.menu');
+        var menu_toggle_span = document.querySelector('.menu_toggle span');
+
+        menu_toggle.onclick = function () {
+            menu_toggle.classList.toggle('active');
+            menu_toggle_span.classList.toggle('active');
+            menu.classList.toggle('responsive');
+        }
+
+    </script>
+
+
+
+
+    <script>
+        // Structure des vidéos avec les descriptions
+        var videos = {
+            "1)L’hameçonnage (phishing en anglais)": ['teft55oTqHU', 'JuWSYr0m3GE'],
+            "2)Les rancongiciels (ransomwares en anglais)": ['i2SRKqILdh0', 'YBa0miWE7P0'],
+            "3)L’usurpation d’identité": ['B3axmyLGfJ0'],
+            "4) les bonne pratique": ['Tna66otHkfc'],
+        };
+
+        // Chargement de l'API JavaScript asynchrone de YouTube
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Fonction appelée lorsque l'API est chargée
+        function onYouTubeIframeAPIReady() {
+            var categoriesContainer = document.querySelector('.categories-container');
+
+            // Parcourir chaque catégorie et créer les éléments HTML correspondants
+            for (var category in videos) {
+                if (videos.hasOwnProperty(category)) {
+                    var categoryContainer = document.createElement('div');
+                    categoryContainer.classList.add('category');
+
+                    var description = document.createElement('div');
+                    description.classList.add('video-description');
+                    description.innerHTML = '<h2>' + category + '</h2>';
+
+                    var videoContainer = document.createElement('div');
+                    videoContainer.classList.add('video-container');
+
+                    categoryContainer.appendChild(description);
+                    categoryContainer.appendChild(videoContainer);
+                    categoriesContainer.appendChild(categoryContainer);
+
+                    var videosForCategory = videos[category];
+                    videosForCategory.forEach(function (videoId) {
+                        createVideoPlayer(videoContainer, videoId);
+                    });
+                }
+            }
+        }
+
+        // Fonction pour créer un lecteur vidéo pour chaque identifiant
+        function createVideoPlayer(container, videoId) {
+            var playerContainer = document.createElement('div');
+            playerContainer.classList.add('video-player');
+            container.appendChild(playerContainer);
+
+            var player = new YT.Player(playerContainer, {
+                height: '315', /* Hauteur fixe des vidéos */
+                width: '560', /* Largeur fixe des vidéos */
+                videoId: videoId,
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        // Fonction appelée lorsque le lecteur est prêt
+        function onPlayerReady(event) {
+            // Vous pouvez ajouter ici des événements supplémentaires ou laisser vide si non nécessaire
+        }
+    </script>
+
+
+    <!-- <script>
+        // Identifiants de vidéos
+        var videos_id = ['JuWSYr0m3GE', 'teft55oTqHU', 'YBa0miWE7P0', 'B3axmyLGfJ0'];
+
+        // Chargement de l'API JavaScript asynchrone de YouTube
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Fonction appelée lorsque l'API est chargée
+        function onYouTubeIframeAPIReady() {
+            var videoContainer = document.querySelector('.video-container');
+            for (var i = 0; i < videos_id.length; i++) {
+                createVideoPlayer(videoContainer, videos_id[i]);
+            }
+        }
+
+        // Fonction pour créer un lecteur vidéo pour chaque identifiant
+        function createVideoPlayer(container, videoId) {
+            var playerContainer = document.createElement('div');
+            playerContainer.classList.add('video-player');
+            container.appendChild(playerContainer);
+
+            var player = new YT.Player(playerContainer, {
+                height: '100%', /* Pour remplir la hauteur du conteneur parent */
+                width: '100%', /* Pour remplir la largeur du conteneur parent */
+                videoId: videoId,
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        // Fonction appelée lorsque le lecteur est prêt
+        function onPlayerReady(event) {
+            // Vous pouvez ajouter ici des événements supplémentaires ou laisser vide si non nécessaire
+        }
+    </script> -->
+
+
+{% endblock content %}

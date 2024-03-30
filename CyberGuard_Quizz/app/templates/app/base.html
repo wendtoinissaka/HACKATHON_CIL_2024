@@ -22,17 +22,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-W2gwaIkF2h/nQ84Kyi3RbYNTQEZ3OBvo+qr8eGQW4eDz9t8i9VzRkmSgfiE28f3IdtzoWYqZaO6/oM6vOxq0gA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="{% static 'app/js/bootstrap.js' %}"></script>
+<script src="{% static 'app/js/script.js' %}"></script>
+
 
     <title>{% block title %} {% endblock %}</title>
+
+
 </head>
-<body>
+<body style="
+    background-image: url({% static 'app/images/background2.png' %});
+    background-size: cover; /* Ajuste la taille de l'image pour couvrir la div */
+    background-position: center; /* Centre l'image horizontalement */">
 
 
 
 <div style="margin-top: calc(3.5rem + 80px);"> <!-- 3.5rem est la hauteur estimée de votre navbar, 16px est un exemple de marge que vous pouvez ajuster -->
 </div>
     <!-- header  -->
-    <header>
+    <header class="bg_custom">
         <!-- menu responsive -->
 
         <div class="menu_toggle">
@@ -40,18 +48,20 @@
         </div>
 
         <div class="logo">
-            <a class="btn" href="{% url 'home' %}"><img id="logo" src="{% static 'app/images/logo.png' %}" style="height:50px;">
+            <a class="" href="{% url 'home' %}"><img id="logo" src="{% static 'app/images/logo.png' %}" style="height:50px;">
 </a>
 
-<!--            <p><span>Logo</span>Logo</p>-->
         </div>
+
         <ul class="menu">
-            <li ><a href="{% url 'all_actualites' %}" class="btn">Conseil de securité</a></li>
-            <li><a href="{% url 'all_actualites' %}"   class="btn">Actualités et tendance</a></li>
-            <li><a href="{% url 'display_quiz' %}"   class="btn">Quizz </a></li>
-            <li><a href="{% url 'all_ressources' %}"   class="btn">Ressources</a></li>
-            <li class=""><a href="#" class="btn">Contact</a></li>
-        </ul>
+    <li><a href="{% url 'conseils_securite' %}" class="btn">Conseils de sécurité</a></li>
+    <li><a href="{% url 'all_actualites' %}" class="btn">Actualités et tendance</a></li>
+    <li><a href="{% url 'display_quiz' %}" class="btn">Quizz Instructifs</a></li>
+    <li><a href="{% url 'video_list' %}" class="btn">Videos Cas Pratique</a></li>
+    <li><a href="{% url 'all_pdf_ressources' %}" class="btn">Ressources</a></li>
+
+</ul>
+
     </header>
 
 
@@ -66,31 +76,89 @@
 
 
 {% block footer %}
-<!--    <footer class="mt-5">-->
-<!--        <p> Mars 2024 All Rights Reserved. CIL </p>-->
-<!--    </footer>-->
-    <footer style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);" class="text-dark mt-5">
-        <p> © CIL Mars 2024 All Rights Reserved. <span style="" class="bg-danger text-white p-2"> N° Ver: 80 00 13 00 </span> </p>
+    <footer  class="text-dark mt-5 text-center">
+        <h2>Nos Partenaires</h2>
+        <div class="d-flex justify-content-center align-items-center gap-5">
+        <div class="mb-5">
+            <img src="{% static 'app/images/ist_logo.jpeg' %}" class="card-img-top quiz-image rounded-pill " alt="{{ actualite.titre }}" style="width:100px; height:100px;">
+            <p class="text-center mt-2">IST</p>
+        </div>
+        <div class="mb-5">
+            <img src="{% static 'app/images/ibam.png' %}" class="card-img-top quiz-image rounded-pill " alt="{{ actualite.titre }}" style="width:100px; height:100px;">
+            <p class="text-center mt-2">IBAM</p>
+        </div>
+        </div>
+
+<div class="mb-5"><a href="{% url 'future_partenaire'  %}" class="btn btn-danger rounded-pill text-center text-decoration-none text-white  p-3 fs-5">Devenir Partenaire</a></div>
+        <div>
+
+            <p> © CIL Mars 2024 All Rights Reserved. <span style="" class="bg-danger text-white p-2"> N° Ver: 80 00 13 00 </span> </p>
+        </div>
     </footer>
 
 {% endblock %}
-<!-- Back to Top -->
-<a href="#" class="btn btn-warning border-3 border-warning py-2 text-dark px-1 rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
-
 <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
+
 <script src="{% static 'app/js/bootstrap.js' %}"></script>
-<script src="{% static 'app/js/script.js' %}"></script>
+<script src="{% static 'app/js/script.js' %}">
+
+
+</script>
 <!-- Intégration de jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+        //menu responsive code JS
+
+        var menu_toggle = document.querySelector('.menu_toggle');
+        var menu = document.querySelector('.menu');
+        var menu_toggle_span = document.querySelector('.menu_toggle span');
+
+        menu_toggle.onclick = function(){
+            menu_toggle.classList.toggle('active');
+            menu_toggle_span.classList.toggle('active');
+            menu.classList.toggle('responsive') ;
+        }
+
+    // Fonction pour écrire et effacer le texte
+    function writeAndEraseText() {
+        var textElement = document.getElementById("dynamic-text");
+        var text = "Donnez vie à vos rêves, louez !";
+        var speed = 100; // Vitesse d'écriture en millisecondes
+        var eraseSpeed = 50; // Vitesse d'effacement en millisecondes
+
+        // Écrire le texte
+        var i = 0;
+        var timer = setInterval(function() {
+            textElement.innerHTML += text.charAt(i);
+            i++;
+            if (i > text.length) {
+                clearInterval(timer);
+                setTimeout(function() {
+                    eraseText();
+                }, 1000); // Temps avant d'effacer le texte
+            }
+        }, speed);
+
+        // Effacer le texte
+        function eraseText() {
+            var timer2 = setInterval(function() {
+                var currentText = textElement.innerHTML;
+                textElement.innerHTML = currentText.slice(0, -1);
+                if (currentText.length === 0) {
+                    clearInterval(timer2);
+                    setTimeout(function() {
+                        writeAndEraseText(); // Répéter le processus
+                    }, 1000); // Temps avant de réécrire le texte
+                }
+            }, eraseSpeed);
+        }
+    }
+
+</script>
 
 </body>
 </html>

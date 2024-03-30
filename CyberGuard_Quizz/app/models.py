@@ -48,6 +48,7 @@ class Question(models.Model):
     choix_3 = models.CharField(max_length=200)
     choix_4 = models.CharField(max_length=200)
     reponse_correcte = models.IntegerField(choices=((1, 'Choix 1'), (2, 'Choix 2'), (3, 'Choix 3'), (4, 'Choix 4')))
+    conseil = models.TextField()
 
     def get_random_questions(self, count):
         questions = list(self.questions.all())
@@ -124,37 +125,71 @@ class RessourcePdf(models.Model):
         return self.titre
 
 
+class RessourceVideo(models.Model):
+    titre = models.CharField(max_length=200)
+    description = models.TextField()
+    video_url = models.URLField()  # Lien vers la vidéo
+    video_file = models.FileField(upload_to='app/videos/', null=True, blank=True)  # Champ pour le fichier vidéo local
+    thumbnail = models.ImageField(upload_to='app/videos/thumbnails/', blank=True, null=True)
+    date_uploaded = models.DateTimeField(auto_now_add=True)
 
-# class SecurityAdvice(models.Model):
-#   """Model for storing and managing security advice."""
-#
-#   name = models.CharField(max_length=255, unique=True)  # Unique identifier for advice
-#   description = models.TextField()  # Brief description of the advice
-#   created_date = models.DateTimeField(auto_now_add=True)  # Date of creation
-#   updated_date = models.DateTimeField(auto_now=True)  # Date of last update
-#   author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True)  # Author (optional)
-#   source = models.URLField(blank=True)  # Link to original source (optional)
-#
-#   # Content related fields
-#   title = models.CharField(max_length=255)  # Title of the advice
-#   content = models.TextField()  # Detailed content of the advice
-#   risk_level = models.CharField(max_length=50, choices=[('LOW', 'Low'), ('MEDIUM', 'Medium'), ('HIGH', 'High')])  # Risk level
-#   target_audience = models.CharField(max_length=255, blank=True)  # Intended users (optional)
-#   keywords = models.CharField(max_length=255, blank=True)  # Keywords for search
-#
-#   # Metadata fields
-#   category = models.ForeignKey('SecurityCategory', on_delete=models.CASCADE)  # Category of advice (e.g., data protection)
-#   format = models.CharField(max_length=50, choices=[('ARTICLE', 'Article'), ('GUIDE', 'Guide'), ('TUTORIAL', 'Tutorial'), ('VIDEO', 'Video')])  # Format of the advice
-#   duration = models.CharField(max_length=50, blank=True)  # Approximate time to follow the advice (optional)
-#   language = models.CharField(max_length=10, blank=True)  # Language of the advice (optional)
-#
-#   # Additional resources
-#   resources = models.ManyToManyField('Resource', blank=True)  # Links to related resources
-#
-#   # Consider adding interactive features (forms, comments) using separate models linked to this one
-#
-#   class Meta:
-#     ordering = ['-created_date']  # Order by creation date (newest first)
-#
-#   def __str__(self):
-#     return self.title
+    def __str__(self):
+        return self.titre
+
+
+
+class ConseilSecurite(models.Model):
+  CATEGORIE_CHOICES = (
+    ('Sécurisez vos comptes', 'Sécurisez vos comptes'),
+    ('Réseaux sociaux', 'Réseaux sociaux'),
+    ('Réseaux et confidentialité', 'Réseaux et confidentialité'),
+    ('Gestion des mots de passe', 'Gestion des mots de passe'),
+  )
+
+  categorie = models.CharField(max_length=50, choices=CATEGORIE_CHOICES)
+  numero = models.IntegerField()
+  titre = models.CharField(max_length=255)
+  contenu = models.TextField()
+
+  def __str__(self):
+    return self.titre
+
+
+class MessageContact(models.Model):
+    nom = models.CharField(max_length=100)
+    email = models.EmailField()
+    sujet = models.CharField(max_length=200)
+    message = models.TextField()
+    date_envoi = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.sujet
+
+
+class Partenaire(models.Model):
+    nom = models.CharField(max_length=200)
+    logo = models.ImageField(upload_to='app/partenaires/', blank=True, null=True)
+    lien_site_web = models.URLField(blank=True, null=True)  # Champ pour le lien du site web
+    email = models.EmailField()
+    numero = models.IntegerField(blank=True, null=True)
+
+class FuturePartenaire(models.Model):
+    nom = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to='app/future_partenaires/', blank=True, null=True)
+    lien_site_web = models.URLField(blank=True, null=True)  # Champ pour le lien du site web
+    telephone = models.CharField(max_length=20)
+    email = models.EmailField()
+    adresse = models.CharField(max_length=255)
+    type_partenaire = models.CharField(max_length=50,
+                                       choices=[('organisation', 'Organisation'), ('entreprise', 'Entreprise'),
+                                                ('autre', 'Autre')])
+    secteur_activite = models.CharField(max_length=50)
+    # date_prise_contact = models.DateField()
+    personne_en_charge = models.CharField(max_length=50)
+    notes = models.TextField()
+    statut = models.CharField(max_length=50, choices=[('prospect', 'Prospect'), ('en_negociation', 'En négociation'),
+                                                      ('partenaire', 'Partenaire')], default='en_negociation')
+    def __str__(self):
+        return self.nom
+
+

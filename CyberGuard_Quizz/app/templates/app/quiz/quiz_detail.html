@@ -30,29 +30,30 @@
     </style>
 </head>
 
-<h1 class="text-center " style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">{{ quiz.titre }}</h1>
+<h1 class="text-center  text-white" >{{ quiz.titre }}</h1>
 <p class="my-5 fs-4 text-center">{{ quiz.description }}</p>
 <h2>Questions:</h2>
-{% for question in quiz.questions.all %}
-    <form id="form_{{ question.id }}">
-        <p>{{ question.enonce }}</p>
-        <label class="response-option">
-            <input type="radio" name="choice" value="1"> 1. {{ question.choix_1 }}
-        </label><br>
-        <label class="response-option">
-            <input type="radio" name="choice" value="2"> 2. {{ question.choix_2 }}
-        </label><br>
-        <label class="response-option">
-            <input type="radio" name="choice" value="3"> 3. {{ question.choix_3 }}
-        </label><br>
-        <label class="response-option">
-            <input type="radio" name="choice" value="4"> 4. {{ question.choix_4 }}
-        </label><br>
-        <div class="hidden" id="answer_{{ question.id }}">La réponse correcte est: {{ question.reponse_correcte }}</div>
-        <div class="hidden" id="result_{{ question.id }}"></div>
-        <button type="button" class="btn  rounded-pill p-2 my-3 text-dark " onclick="showAnswer({{ question.id }})" style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">Vérifier ma réponse</button>
-    </form>
-{% endfor %}
+    {% for question in quiz.questions.all %}
+        <form id="form_{{ question.id }}" class="fs-3">
+            <div class="bg_custom text-center">
+                <p class="text-">{{ question.enonce }}</p></div>
+            <label class="response-option">
+                <input type="radio" name="choice" value="1"> 1. {{ question.choix_1 }}
+            </label><br>
+            <label class="response-option">
+                <input type="radio" name="choice" value="2"> 2. {{ question.choix_2 }}
+            </label><br>
+            <label class="response-option">
+                <input type="radio" name="choice" value="3"> 3. {{ question.choix_3 }}
+            </label><br>
+            <label class="response-option">
+                <input type="radio" name="choice" value="4"> 4. {{ question.choix_4 }}
+            </label><br>
+            <div class="hidden" id="answer_{{ question.id }}">La réponse correcte est: {{ question.reponse_correcte }}</div>
+            <div class="hidden" id="result_{{ question.id }}"></div>
+            <button type="button" class="btn  rounded-pill p-2 my-3 text-white bg-danger fs-4 " onclick="showAnswer({{ question.id }})" >Vérifier ma réponse</button>
+        </form>
+    {% endfor %}
 
 <!-- JavaScript pour afficher la réponse -->
 <script>

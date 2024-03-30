@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import ConseilDeSecurite, Actualite, Quiz, Question, Loi, Titre_loi, Chapitre_loi, RessourceEducative, \
-    RessourcePdf
+    RessourcePdf, RessourceVideo, ConseilSecurite, MessageContact, Partenaire, FuturePartenaire
 
 
 @admin.register(ConseilDeSecurite)
@@ -56,6 +56,28 @@ class RessourceEducativeAdmin(admin.ModelAdmin):
 @admin.register(RessourcePdf)
 class RessourcePdfAdmin(admin.ModelAdmin):
     list_display = ('titre','description',)
+
+@admin.register(RessourceVideo)
+class RessourceVideoAdmin(admin.ModelAdmin):
+    list_display = ('titre','description', 'video_url',)
+
+@admin.register(ConseilSecurite)
+class ConseilSecuriteAdmin(admin.ModelAdmin):
+    list_display = ('categorie', 'titre','numero',)
+
+@admin.register(MessageContact)
+class MessageContactAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'email','message', 'date_envoi')
+    list_filter = ('date_envoi',)
+
+
+@admin.register(Partenaire)
+class PartenaireAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'email','numero', 'lien_site_web')
+
+@admin.register(FuturePartenaire)
+class FuturePartenaireAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'email','telephone', 'secteur_activite')
 
 
 # admin.site.register(ConseilDeSecurite, ConseilDeSecuriteAdmin)

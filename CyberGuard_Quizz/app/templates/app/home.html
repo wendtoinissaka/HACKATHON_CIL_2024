@@ -2,6 +2,10 @@
 
 {% block content %}
 {% load static %}
+
+
+
+
 <div class="container" style="height: 400px;
     width: 100%;
     background-image: url({% static 'app/images/banniere.png' %});
@@ -14,31 +18,26 @@
         <h1 class="text-white mt-5 mx-5" id="dynamic-text"></h1>
         </div>
 
-    <div class="row g-0 mt-5">
-    <form method="get" class="">
-        <div class="position-relative mx-auto ">
-            <input  placeholder="Consulter l'article N° " name="q"  class="form-control border-2 border-white w-75 py-3 px-5 rounded-pill" type="text" >
-            <button type="submit" class="btn btn-warning border-2 border-white py-3 px-4 position-absolute rounded-pill text-dark h-100" style="top: 0; background-color: #ffc107 ; right: 5%;">Rechercher</button>
-        </div>
-    </form>
-    </div>
 </div>
 
-<!--<section id="home">-->
-<!--    <div class="left">-->
-<!--        <h1 class="text-dark fw-bold">Soyez conscient, soyez proactif : protégez vos données  <span>personnelles</span></h1>-->
-<!--        <p class="">Apprenez à gérer vos données personnelles et à les protéger efficacement.</p>-->
-<!--    </div>-->
-<!--    <div class="right">-->
-<!--        <img src="{% static 'app/images/banniere.png' %}">-->
-<!--    </div>-->
-<!--</section>-->
+
+
+
+<!--            <h1  class="text-center text-dark  mt-5">Soyez conscient, soyez proactif : protégez vos données  <span>personnelles</span></h1>-->
+<section id="Lois" class="presentation my-5">
+    <h1 class="section_title text-dark fw-bold p-3 fs-2 text-center" style="padding: 20px 0;">la Commission de l’Informatique et des Libertés (CIL) </h1>
+    <p style="font-size: 1.5rem; margin: 10px 0;">
+        La Commission de l'Informatique et des Libertés (CIL) est une autorité administrative indépendante créée en 2004 pour protéger les données personnelles. Ses missions incluent l'information sur les droits des individus, le contrôle de l'application des lois, la protection des libertés, et l'adaptation législative aux TIC. Elle dispose de pouvoirs de contrôle, de sanction et de dénonciation, avec 9 membres nommés pour 5 ans renouvelables, représentant divers secteurs.
+    </p>
+
+</section>
+
 <div class="container custom-margin">
     <div class="row mt-5 justify-content-center">
         <!-- Texte de présentation -->
         <div class="col-lg-5 mt-5">
             <h1 class="text-center text-dark fw-bold">Soyez conscient, soyez proactif : protégez vos données  <span>personnelles</span></h1>
-            <p class="text-center">Apprenez à gérer vos données personnelles et à les protéger efficacement.</p>
+            <p class="text-center fs-4">Apprenez à gérer vos données personnelles et à les protéger efficacement.</p>
         </div>
 
         <!-- Image -->
@@ -50,22 +49,26 @@
 
 <!-- section Actualite -->
 <section id="Actualités" class="my-5">
-    <h1 class="section_title text-dark fw-bold p-2 fs-2">Actualités</h1>
-    {% if actualite %}
+    <h1 class="section_title text-dark fw-bold p-3 fs-2">Actualités</h1>
+    {% if actualites %}
     <div class="container mt-5">
         <div class="row">
-            {% for actualite in actualite %}
+            {% for actualite in actualites %}
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card quiz-card">
                     <img src="{{ actualite.image.url }}" class="card-img-top quiz-image" alt="{{ actualite.titre }}">
                     <div class="card-body">
                         <h5 class="card-title ">
-                            <a href="{% url 'actualite_detail' pk=actualite.pk %}" class="text-decoration-none fs-3">
-                    {{ actualite.titre }}
+                            <a href="{% url 'actualite_detail' pk=actualite.pk %}" class="text-decoration-none text-primary fs-3">
+                    {{ actualite.titre|truncatechars:50 }}
                 </a>
                         </h5>
-                        <p class="card-text fs-5">{{ actualite.contenu }}</p>
-                        <p class="card-text">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
+                        <p class="card-text fs-5">{{ actualite.contenu|truncatechars:100 }}</p>
+                        <p class="card-text text-danger">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
+<div class="text-center">
+<a href="{% url 'actualite_detail' pk=actualite.pk %}" class="btn btn-danger rounded-pill text-center text-decoration-none text-white ">Consulter</a>
+
+</div>
                     </div>
                 </div>
             </div>
@@ -79,7 +82,8 @@
     {% endif %}
     <form action="{% url 'all_actualites' %}" method="get">
       <div class="text-center mb-5">
-        <button type="submit" class="btn btn-danger rounded-pill  p-3  my-5">Voir la page des actualites</button>
+        <button type="submit" class="btn  btn-danger rounded-pill  p-3  my-5">Voir la page des actualites</button>
+
       </div>
     </form>
 </section>
@@ -87,7 +91,8 @@
 
 <!-- section loi -->
 <section id="Lois" class="">
-    <h1 class="section_title text-dark fw-bold p-2 fs-2">Lois en vigueur</h1>
+
+    <h1 class="section_title text-dark fw-bold p-3 fs-2">Lois en vigueur</h1>
     <p class="fs-3 my-5">LOI N°001-2021/AN
 PORTANT PROTECTION DES PERSONNES A L’EGARD DU
 TRAITEMENT DES DONNEES A CARACTERE PERSONNEL</p>
@@ -100,20 +105,20 @@ TRAITEMENT DES DONNEES A CARACTERE PERSONNEL</p>
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                     <h3>Article n° {{ loi.numero_article }}</h3>
                     <p>{{ loi.description|truncatechars:150 }}</p>
-                    <a href="{% url 'loi_detail' loi.id %}" class="read_more">Lire Plus</a>
+                    <a href="{% url 'loi_detail' loi.id %}" class="btn btn-danger rounded-pill  text-white">Lire Plus</a>
                 </div>
                 {% endfor %}
             </div>
         </div>
         <form action="{% url 'all_lois' %}" method="get">
           <div class="text-center mb-5">
-            <button type="submit" class="btn btn-danger rounded-pill  p-3  text-dark fs-3" style=" background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">Voir tous les articles en rigueur</button>
+            <button type="submit" class="btn  btn-danger rounded-pill  p-3  text-white fs-4" >Voir tous les articles en rigueur</button>
           </div>
 
         </form>
         <div class="text-center mb-5">
         <a href="{% static 'app/fichiers/Loi_n001_2021_AN_portant_protection_des_personnes_a_l_egard_du_traitement.pdf' %}" download>
-        <button class="btn btn-danger rounded-pill p-3 text-dark fs-3" style="background-image: linear-gradient(to right top, #fffd00, #eaf900, #d4f500, #bef006, #a8eb12);">
+        <button class="btn btn-danger rounded-pill p-3 text-white fs-4 my-5" >
             Télécharger toutes les lois
         </button>
         </a>
@@ -129,26 +134,75 @@ TRAITEMENT DES DONNEES A CARACTERE PERSONNEL</p>
 
 <!-- section contact -->
 <section id="contact" class="mt-5">
-    <h1 class="section_title text-dark fw-bold p-2 fs-2">Nos Services</h1>
+    <h1 class="section_title text-dark fw-bold p-3 fs-2">Nous contactez</h1>
     <div class="localisation_contact_div">
         <div class="localisation">
             <h3>Notre Adresse</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3897.8720994639843!2d-1.505779425088184!3d12.324394528737528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe2ebe4845555555%3A0xa9ec98e4b4dc1b03!2sCommission%20de%20l&#39;Informatique%20et%20des%20Libert%C3%A9s!5e0!3m2!1sfr!2sbf!4v1711608737652!5m2!1sfr!2sbf" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+
         <div class="form_contact">
             <h3>Envoyer un message</h3>
-            <form action="#">
-                <input type="text"placeholder="Nom">
-                <input type="email"placeholder="Adresse Mail">
-                <input type="text"placeholder="Objet">
-                <textarea name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
-                <input type="submit" value="Envoyer">
-            </form>
+            <form method="post" class="form-horizontal">
+        {% csrf_token %}
+        <input type="text" placeholder="Votre nom" id="nom" name="nom">
+
+        <input type="email" placeholder="CIL@gmail.com" id="email" name="email">
+
+
+        <input type="text" placeholder="Sujet" id="sujet" name="sujet">
+
+<textarea class="form-control col-md-6" name="message" id="message" rows="5" style="resize: none; height:200px;" placeholder="Le contenu de votre message"></textarea>
+<div class="form-field m-2">
+    {{ form.captcha }}
+    {% if form.captcha.errors %}
+        <ul class="errors">
+            {% for error in form.captcha.errors %}
+                <p class="text-danger">{{ error }}</p>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+
+        <button type="submit" class="btn btn-danger rounded-pill my-4 resize-none  text-white fs-4" >Envoyer</button>
+    </form>
         </div>
     </div>
 </section>
 
 <script>
+        //menu responsive code JS
+
+        var menu_toggle = document.querySelector('.menu_toggle');
+        var menu = document.querySelector('.menu');
+        var menu_toggle_span = document.querySelector('.menu_toggle span');
+
+        menu_toggle.onclick = function(){
+            menu_toggle.classList.toggle('active');
+            menu_toggle_span.classList.toggle('active');
+            menu.classList.toggle('responsive') ;
+        }
+            let currentIndex = 0;
+        const slides = document.querySelectorAll('.carousel li');
+        const totalSlides = slides.length;
+
+        function moveSlide(direction) {
+          currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+          updateCarousel();
+        }
+
+        function updateCarousel() {
+          const offset = -currentIndex * 100 + '%';
+          document.querySelector('.carousel ul').style.transform = `translateX(${offset})`;
+        }
+
+        // Automatic carousel slide
+        setInterval(function() {
+          moveSlide(1);
+        }, 3000);
+
+
+
     //menu responsive code JS
     var menu_toggle = document.querySelector('.menu_toggle');
     var menu = document.querySelector('.menu');

@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container mt-5 fs-4">
+<!--    <h1 class="text-center mb-4">Conseils de sécurité</h1>-->
+
+
+    <h1 class="text-center mb-5">Déjouez <span class="text-danger"> les dangers </span>: Les clés de la sécurité à portée de clic!</h1>
+
+    {% for categorie, conseils in conseils_par_categorie.items %}
+        <section id="{{ categorie|slugify }}" class="mb-5">
+<!--            <h2 class="section_title">{{ categorie }}</h2>-->
+<h1 class="text-center bg-danger text-white"  >{{ categorie }}</h1>
+
+            <div class="row mt-4">
+                {% for conseil in conseils %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title  text-center fs-2" >{{ conseil.titre }}</h5>
+                                <p class="card-text">{{ conseil.numero }}. {{ conseil.contenu }} </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endfor %}
+</div>
+{% endblock %}

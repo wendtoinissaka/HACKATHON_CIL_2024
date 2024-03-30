@@ -24,7 +24,13 @@ html {
     scroll-behavior: smooth;
 }
 body {
-    position: relative;
+     position: relative;
+    background-image: url({% static 'app/images/background2.png' %});   ;
+
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
 }
 header {
     position: fixed;
@@ -37,7 +43,6 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 8%;
-    height: 50px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
 }
 header .logo {
@@ -313,8 +318,15 @@ header .logo span {
     color: #fff;
     border: 0;
 }
+
+.bg_custom{
+     background: rgb(203,255,151);
+     background: linear-gradient(90deg, rgba(203,255,151,1) 0%, rgba(255,255,251,1) 35%, rgba(127,202,129,1) 68%, rgba(70,199,75,1) 71%, rgba(3,150,11,1) 100%);
+
+}
 footer {
-    background-color: #ea1f33;
+ background: rgb(203,255,151);
+background: linear-gradient(90deg, rgba(203,255,151,1) 0%, rgba(255,255,251,1) 35%, rgba(127,202,129,1) 68%, rgba(70,199,75,1) 71%, rgba(3,150,11,1) 100%);
     text-align: center;
     padding: 10px 0;
     color: #fff;
@@ -349,10 +361,10 @@ footer {
     .images li {
         width: 100%;
     }
-    #services {
+    #Lois {
         padding: 0 10px;
     }
-    .service {
+    .Loi {
         width: 100%;
     }
     #contact {
@@ -418,15 +430,16 @@ footer {
         width: 28px;
         transform: rotate(-45deg);
     }
-    header .menu.responsive {
+
+header .menu.responsive {
         position: absolute;
         top: 50px;
         left: 0;
         display: flex;
+        flex-direction: column;
         width: 100%;
-        height: 50px;
-        align-items: center;
-        justify-content: center;
+        /* align-items: center; */
+        /* justify-content: center; */
         flex-wrap: wrap;
         z-index: 2;
         background-color: #fff;
@@ -437,6 +450,106 @@ footer {
 }
 
     .custom-margin {
-        margin-top: 150px; /* Ajoute une marge de 50 pixels en haut */
+        margin-top: 50px; /* Ajoute une marge de 50 pixels en haut */
         margin-bottom: 50px; /* Ajoute une marge de 50 pixels en bas */
+
     }
+
+
+
+.carousel {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 60px;
+}
+.carousel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.carousel li {
+  flex: 0 0 100%;
+  width: 100%;
+}
+.carousel-button {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none; /* Ajout de cette ligne pour supprimer le fond */
+}
+.carousel-button svg {
+  width: 50px;
+  height: 50px;
+  border-radius: 40%;
+  cursor: pointer;
+  fill: #000;
+  border-radius: 50%;
+}
+.carousel-button svg:hover { transform: scale(1.1); }
+.prev {
+  left: 0;
+}
+.next {
+  right: 0;
+}
+
+
+.gradient-button {
+  background: linear-gradient(90deg, rgba(203,255,151,1) 0%, rgba(255,255,251,1) 35%, rgba(127,202,129,1) 68%, rgba(70,199,75,1) 71%, rgba(3,150,11,1) 100%);
+  /* Additional styles for the button (optional) */
+  border: none; /* Remove default border if needed */
+  color: #fff; /* Text color */
+  padding: 10px 20px; /* Adjust padding */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+
+
+    .carousel {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      position: relative;
+      margin-top: 60px;
+    }
+    .carousel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel li {
+      flex: 0 0 100%;
+      width: 100%;
+    }
+    .carousel-button {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none; /* Ajout de cette ligne pour supprimer le fond */
+    }
+    .carousel-button svg {
+      width: 50px;
+      height: 50px;
+      border-radius: 40%;
+      cursor: pointer;
+      fill: #000;
+      border-radius: 50%;
+    }
+    .carousel-button svg:hover { transform: scale(1.1); }
+    .prev {
+      left: 0;
+    }
+    .next {
+      right: 0;
+    }
+

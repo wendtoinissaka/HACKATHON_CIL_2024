@@ -123,3 +123,23 @@ function restartQuiz(){
     setCount();
     loadQuestion();
 }
+
+
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.carousel li');
+        const totalSlides = slides.length;
+
+        function moveSlide(direction) {
+          currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+          updateCarousel();
+        }
+
+        function updateCarousel() {
+          const offset = -currentIndex * 100 + '%';
+          document.querySelector('.carousel ul').style.transform = `translateX(${offset})`;
+        }
+
+        // Automatic carousel slide
+        setInterval(function() {
+          moveSlide(1);
+        }, 3000);
