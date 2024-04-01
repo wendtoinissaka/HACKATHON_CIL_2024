@@ -32,4 +32,4 @@ class SignalementForm(forms.ModelForm):
 
     class Meta:
         model = SignalementViolation
-        fields = ['description', 'preuves','type_violation', 'gravite', 'captcha']
+        fields = ['description', 'lien_site_web', 'preuves','type_violation', 'gravite', 'captcha']

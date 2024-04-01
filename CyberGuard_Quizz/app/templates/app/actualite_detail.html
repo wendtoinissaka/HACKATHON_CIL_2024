@@ -9,7 +9,9 @@
                     <h2 class="card-title">{{ actualite.titre }}</h2>
                     <p class="card-text">{{ actualite.contenu }}</p>
                     <p class="card-text">{{ actualite.date_publication|date:"d F Y à H:i" }}</p>
-                    <a href="{{ actualite.lien_site_web }}" class="btn btn-primary">Visiter le site web</a>
+<!--                    <a href="{{ actualite.lien_site_web }}" class="btn btn-primary">Visiter le site web</a>-->
+                    <a href="{{ actualite.lien_site_web }}"  class="btn btn-danger rounded-pill p-2 text-white">Visiter le site web</a>
+
                 </div>
             </div>
         </div>

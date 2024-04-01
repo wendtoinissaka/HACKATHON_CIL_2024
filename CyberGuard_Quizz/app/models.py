@@ -213,6 +213,7 @@ class SignalementViolation(models.Model):
 
     type_violation = models.CharField(max_length=50, choices=TYPE_CHOICES, default='autre')
     description = models.TextField()
+    lien_site_web = models.URLField(blank=True, null=True)  # Champ pour le lien du site web
     preuves = models.FileField(upload_to='app/signalements/', blank=True, null=True)
     date_incident = models.DateTimeField(auto_now_add=True)
     gravite = models.CharField(max_length=10, choices=GRAVITE_CHOICES, default='faible')
